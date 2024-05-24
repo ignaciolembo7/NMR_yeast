@@ -58,8 +58,8 @@ def draw(event, former_x, former_y, flags, param):
 serial = input("Serial:") #ms
 nrois = 1 #input("Nrois:") #ms
 slic = 0
-scaling_factor = 6 # Factor de escala (puedes ajustarlo según sea necesario)
-file_name = "levaduras_20240517"
+scaling_factor = 5 # Factor de escala (puedes ajustarlo según sea necesario)
+file_name = "levaduras_20220829"
 ims = ds(f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}/"+str(serial)+"/pdata/1/2dseq").data
 
 A0_matrix = ims[:,:,slic,0]

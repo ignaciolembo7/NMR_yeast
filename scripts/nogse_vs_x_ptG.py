@@ -3,7 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from nogse import nogse
+from protocols import nogse
 sns.set(context='paper')
 sns.set_style("whitegrid")
 

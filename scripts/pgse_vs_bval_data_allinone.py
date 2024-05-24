@@ -8,10 +8,10 @@ import seaborn as sns
 sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
-file_name = "mousebrain_20200409"
+file_name = "levaduras_20220829"
 data_directory = f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}"
 os.makedirs(data_directory, exist_ok=True)
-slic = 1 # slice que quiero ver 0 o 1
+slic = 0 # slice que quiero ver 0 o 1
 max_field = 1466.6153
 
 image_paths, method_paths = pgse.upload_pgse_vs_bval_data(data_directory, slic)
@@ -22,7 +22,7 @@ image_paths, method_paths = pgse.upload_pgse_vs_bval_data(data_directory, slic)
 idx = 0
 fig, ax = plt.subplots(figsize=(8,6)) #Imagen de todas las ROIS juntas
 fig3, ax3 = plt.subplots(figsize=(8,6)) #Imagen de todas las ROIS juntas
-rois = ["ROI1","ROI2","ROI3","ROI4","ROI5"]
+rois = ["ROI1"] #,"ROI2","ROI3","ROI4","ROI5"]
 
 for roi in rois: 
 
