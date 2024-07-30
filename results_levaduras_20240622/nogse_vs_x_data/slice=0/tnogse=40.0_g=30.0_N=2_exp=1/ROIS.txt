@@ -1,0 +1,3 @@
+ROI general: 500
+ROIS: 
+borro imagen: 
