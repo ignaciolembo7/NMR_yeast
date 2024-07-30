@@ -1,0 +1,3 @@
+ROI general: 264
+ROIS: 250 259 262 263 264 265
+borro imagen 

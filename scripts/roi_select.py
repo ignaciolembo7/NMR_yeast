@@ -59,11 +59,11 @@ serial = input("Serial:") #ms
 nrois = 1 #input("Nrois:") #ms
 slic = 0
 scaling_factor = 5 # Factor de escala (puedes ajustarlo según sea necesario)
-file_name = "levaduras_20220829"
+file_name = "levaduras_20240622"
 ims = ds(f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}/"+str(serial)+"/pdata/1/2dseq").data
 
 A0_matrix = ims[:,:,slic,0]
-M_matrix = ims[:,:,slic,1]
+M_matrix = ims[:,:,slic,0]
 original = M_matrix #/A0_matrix 
 
 np.savetxt(f"rois/original.txt", original, fmt='%f')
@@ -105,7 +105,9 @@ for i in range(nrois):
     roi = np.zeros_like(original)
     roi[mask_resized == 255] = original[mask_resized == 255]
     signal = np.mean(roi[roi != 0])
+    signal_err = np.std(roi[roi != 0])
     print(f"Average intensity of ROI {i+1}: {signal}")
+    print(f"Average intensity error of ROI {i+1}: {signal_err}")
 
     # Save roi
     np.savetxt(f"rois/roi_{i+1}.txt", roi, fmt='%f')
@@ -118,30 +120,20 @@ for i in range(nrois):
 
 cv2.destroyAllWindows()
 
-# Iterar sobre todas las máscaras de las ROIs y superponerlas en la imagen final
+# Copiar la imagen original para la imagen final
 imagen_final = im.copy()
-
-for i in range(1, nrois+1): 
-    mask_roi = cv2.imread(f"rois/mask_{i}.jpg", cv2.IMREAD_GRAYSCALE)
-    imagen_final = cv2.add(imagen_final, mask_roi)
-
-# Guardar la imagen final
-cv2.imwrite(f"rois/im={serial}_rois_final.jpg", imagen_final)
-
-# Cargar la imagen en escala de grises
-imagen_final = cv2.imread(f"rois/im={serial}_rois_final.jpg", cv2.IMREAD_GRAYSCALE)
-
-# Convertir la imagen en escala de grises a color
 imagen_color = cv2.cvtColor(imagen_final, cv2.COLOR_GRAY2BGR)
 
-# Definir el color rojo en RGB
-color_rojo = (0, 0, 255.0)  # (B, G, R)
+for i in range(1, nrois + 1):
+    # Leer la máscara de la ROI en escala de grises
+    mask_roi = cv2.imread(f"rois/mask_{i}.jpg", cv2.IMREAD_GRAYSCALE)
+    
+    # Superponer la máscara en la imagen final
+    imagen_final = cv2.add(imagen_final, mask_roi)
+    cv2.imwrite(f"rois/im={serial}_rois_final.jpg", imagen_final)
+    
+    # Colorear la ROI en rojo en la imagen color
+    imagen_color[mask_roi >= 240] = [0, 0, 255]
 
-# Encontrar los píxeles blancos en la imagen en escala de grises
-indices_blancos = np.where((imagen_final >= 250) & (imagen_final <= 255))
-
-# Reemplazar los píxeles blancos por rojo en la imagen a color
-imagen_color[indices_blancos] = color_rojo
-
-# Guardar la imagen final
+# Guardar la imagen final en color con las ROIs superpuestas en rojo
 cv2.imwrite(f"../results_{file_name}/images/im={serial}_rois_final_color.jpg", imagen_color)

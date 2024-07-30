@@ -1,0 +1,3 @@
+ROI general: 402
+ROIS: 
+borro imagen: 

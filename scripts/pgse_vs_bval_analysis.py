@@ -63,7 +63,7 @@ for roi, color in tqdm(zip(rois,palette)):
     bval_fit = np.linspace(np.min(bval[-15:]), np.max(bval[-15:]), num=1000)
     fit = pgse.M_pgse_exp(bval_fit, M0_fit, D0_fit)
 
-    with open(f"{directory}/parameters_{roi}_pgse_vs_bvalue_DwGradDur={round(DwGradDur,6)}_DwGradSep={round(DwGradSep,6)}.txt", "a") as a:
+    with open(f"{directory}/parameters_pgse_vs_bvalue_DwGradDur={round(DwGradDur,6)}_DwGradSep={round(DwGradSep,6)}.txt", "a") as a:
         print(roi,  " - M0 = ", M0_fit, "+-", error_M0, file=a)
         print("    ",  " - D0 = ", D0_fit, "+-", error_D0, file=a)
     
