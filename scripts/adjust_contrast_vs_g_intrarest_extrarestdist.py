@@ -34,7 +34,7 @@ os.makedirs(directory, exist_ok=True)
 
 for roi, color in zip(rois,palette):
 
-    data = np.loadtxt(f"../results_{file_name}/contrast_vs_g_data/tnogse={tnogse}_n={int(n)}_exp={exp}/{roi}_data_contrast_vs_g_tnogse={tnogse}_n={int(n)}.txt")
+    data = np.loadtxt(f"../results_{file_name}/contrast_vs_g_data/tnogse={tnogse}_n={int(n)}_exp={exp}/{roi}_data_contrast_vs_g_tnogse={tnogse}_N={int(n)}.txt")
 
     g = data[:, 0]
     f = data[:, 1]
@@ -45,7 +45,7 @@ for roi, color in zip(rois,palette):
     # Separar los vectores nuevamente
     g, f = zip(*vectores_ordenados)
 
-    #modelo M_nogse_rest_dist
+    #modelo contrast_vs_g_intrarest_extrarestdist
     model = lmfit.Model(nogse.contrast_vs_g_intrarest_extrarestdist, independent_vars=["TE", "G", "N", "D0_int", "D0_ext"], param_names=["l_c_int", "l_c_mode_ext", "sigma_ext", "M0_int", "M0_ext"])
     model.set_param_hint("M0_int", value=1000.0, min = 0.0)
     model.set_param_hint("M0_ext", value=1000.0, min = 0.0)

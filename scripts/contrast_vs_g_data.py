@@ -33,22 +33,22 @@ for roi in rois:
 
     T_nogse, g_contrast, n, f, error =  nogse.generate_contrast_roi_v2(image_paths, method_paths, mask, slic)
 
-    directory = f"../results_{file_name}/{folder}/tnogse={T_nogse}_n={int(n)}_exp={exp}"
+    directory = f"../results_{file_name}/{folder}/tnogse={T_nogse}_N={int(n)}_exp={exp}"
     os.makedirs(directory, exist_ok=True)
 
     nogse.plot_contrast_vs_g_data(ax, roi, g_contrast, f, error, T_nogse, n, slic)
     nogse.plot_contrast_vs_g_data(ax1, roi, g_contrast, f, error, T_nogse, n, slic)
 
     table = np.vstack((g_contrast, f, error))
-    np.savetxt(f"{directory}/{roi}_data_contrast_vs_g_tnogse={T_nogse}_n={n}.txt", table.T, delimiter=' ', newline='\n')
+    np.savetxt(f"{directory}/{roi}_data_contrast_vs_g_tnogse={T_nogse}_N={n}.txt", table.T, delimiter=' ', newline='\n')
     
     fig1.tight_layout()
-    fig1.savefig(f"{directory}/{roi}_contrast_vs_g_tnogse={T_nogse}_n={n}.pdf")
-    fig1.savefig(f"{directory}/{roi}_contrast_vs_g_tnogse={T_nogse}_n={n}.png", dpi=600)
+    fig1.savefig(f"{directory}/{roi}_contrast_vs_g_tnogse={T_nogse}_N={n}.pdf")
+    fig1.savefig(f"{directory}/{roi}_contrast_vs_g_tnogse={T_nogse}_N={n}.png", dpi=600)
     plt.close(fig1)
     idx += 1
 
 fig.tight_layout()
-fig.savefig(f"{directory}/contrast_vs_g_tnogse={T_nogse}_n={n}.pdf")
-fig.savefig(f"{directory}/contrast_vs_g_tnogse={T_nogse}_n={n}.png", dpi=600)
+fig.savefig(f"{directory}/contrast_vs_g_tnogse={T_nogse}_N={n}.pdf")
+fig.savefig(f"{directory}/contrast_vs_g_tnogse={T_nogse}_N={n}.png", dpi=600)
 plt.close(fig)
