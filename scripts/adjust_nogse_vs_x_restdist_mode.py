@@ -10,14 +10,13 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240622"
-folder = "rest_vs_x_restdist_mode"
+folder = "nogse_vs_x_restdist_mode"
 
-exp = 1 #int(input('exp: '))
 num_grad = input('Gradiente: ')
-tnogse = float(input('T_NOGSE [ms]: ')) #ms
+tnogse = float(input('Tnogse [ms]: ')) #ms
 g = float(input('g [mT/m]: ')) #mT/m
 n = 2
-
+exp = 1 #int(input('exp: '))
 
 slic = 0 # slice que quiero ver
 modelo = "restdist_mode"  # nombre carpeta modelo libre/rest/tort
@@ -27,7 +26,6 @@ D0_int = 0.7e-12 # intra
 D0 = D0_ext
 
 fig, ax = plt.subplots(figsize=(8,6)) 
-
 rois = ["ROI1"]
 palette = sns.color_palette("tab10", len(rois)) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
 
@@ -49,14 +47,14 @@ for roi, color in zip(rois, palette):
     x, f = zip(*vectores_ordenados)
 
     #remover los elementos en la posicion _ de x y f 
-    x = np.delete(x, [10,11])
-    f = np.delete(f, [10,11])
+    #x = np.delete(x, [10,11])
+    #f = np.delete(f, [10,11])
 
     #modelo M_nogse_rest_dist
     model = lmfit.Model(nogse.M_nogse_rest_dist, independent_vars=["TE", "G", "N", "x", "D0"], param_names=["l_c_mode", "sigma", "M0"])
-    model.set_param_hint("M0", value=438.1867644995955)
-    model.set_param_hint("l_c_mode", value=9.96897654357775, min = 0.1, max = 100)
-    model.set_param_hint("sigma", value=0.1, min = 0.01, max=10.0)
+    model.set_param_hint("M0", value=1000, max = 10000)
+    model.set_param_hint("l_c_mode", value=6.0, min = 1.0, max = 20.0)
+    model.set_param_hint("sigma", value=0.5, min = 0.01, max=5.0)
     params = model.make_params()
     #params["M0"].vary = False # fijo M0 en 1, los datos estan normalizados y no quiero que varíe
     params["l_c_mode"].vary = 1
@@ -78,12 +76,12 @@ for roi, color in zip(rois, palette):
     l_c_mid = l_c_median*np.exp((sigma_fit**2)/2)
 
     with open(f"{directory}/parameters_tnogse={tnogse}_g={g}_N={int(n)}.txt", "a") as a:
-        print(roi,  " - M0 = ", M0_fit, "+-", error_M0, file=a)
         print(roi,  " - l_c_mode = ", l_c_fit, "+-", error_l_c, file=a)
-        print(roi,  " - l_c_median = ", l_c_median, "+-", file=a)
-        print(roi,  " - l_c_mid = ", l_c_mid, "+-", file=a)
-        print(roi,  " - sigma = ", sigma_fit, "+-", error_sigma, file=a)
-        print(roi,  " - D0 = ", D0, "+-", file=a)
+        print("    ",  " - l_c_median = ", l_c_median, "+-", file=a)
+        print("    ",  " - l_c_mid = ", l_c_mid, "+-", file=a)
+        print("    ",  " - sigma = ", sigma_fit, "+-", error_sigma, file=a)
+        print("    ",  " - M0 = ", M0_fit, "+-", error_M0, file=a)
+        print("    ",  " - D0 = ", D0, "+-", file=a)
     
     nogse.plot_nogse_vs_x_restdist(ax, roi, modelo, x, x_fit, f, fit, tnogse, n, g, l_c_fit, slic, color) 
     nogse.plot_nogse_vs_x_restdist(ax1, roi, modelo, x, x_fit, f, fit, tnogse, n, g, l_c_fit, slic, color)
@@ -108,8 +106,11 @@ for roi, color in zip(rois, palette):
     fig2.savefig(f"{directory}/{roi}_dist_tnogse={tnogse}_g={g}_N={int(n)}_exp={exp}.png", dpi=600)
     plt.close(fig2)
 
-    with open(f"../results_{file_name}/{folder}/parameters_vs_tnogse_{num_grad}.txt", "a") as a:
-        print(tnogse, l_c_fit, error_l_c, sigma_fit, error_sigma, M0_fit, error_M0, file=a)
+    with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_tnogse_g={num_grad}.txt", "a") as a:
+        print(tnogse, g, l_c_fit, error_l_c, sigma_fit, error_sigma, M0_fit, error_M0, file=a)
+
+    with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_g_tnogse={tnogse}.txt", "a") as a:
+        print(g, tnogse, l_c_fit, error_l_c, sigma_fit, error_sigma, M0_fit, error_M0, file=a)
 
 fig.tight_layout()
 fig.savefig(f"{directory}/nogse_vs_x_tnogse={tnogse}_g={g}_N={int(n)}_exp={exp}.pdf")

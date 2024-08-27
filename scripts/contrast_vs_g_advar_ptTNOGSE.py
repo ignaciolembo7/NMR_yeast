@@ -31,8 +31,25 @@ n = 2
 exp = 1 
 roi = 'ROI1'
 
-palette = sns.color_palette("tab10", 10) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
+#palette = sns.color_palette("tab10", 10) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
 
+# Definir manualmente una paleta de colores personalizada (sin verde ni naranja ya que los reservo para indicar las zonas intra y extracelular respectivamente).
+palette = [
+    #"#aec7e8"   # Azul claro
+    "#1f77b4",  # Azul
+    "#9467bd",  # Púrpura
+    "#e377c2",  # Rosa
+    "#7f7f7f",  # Gris
+    "#8c564b",  # Marrón
+    "#f1c40f",  # Amarillo oscuro
+    "#d62728",  # Rojo
+]
+
+# Asignar la paleta personalizada
+sns.set_palette(palette)
+
+# Mostrar la paleta
+#sns.palplot(palette)
 
 for i, color in zip([[17.5, n],[21.5, n],[25.0, n],[27.5, n],[30.0, n],[35.0, n],[40.0, n]], palette):    
 
@@ -55,7 +72,7 @@ for i, color in zip([[17.5, n],[21.5, n],[25.0, n],[27.5, n],[30.0, n],[35.0, n]
     L_c_f = ((3/2)**(1/4))*(L_d**(-1/2))
     l_c_f = L_c_f*l_G 
     
-    ax1.plot(g_contrast, f, "-o", markersize=7, linewidth = 2, label = i[0])
+    ax1.plot(g_contrast, f, "-o", markersize=7, linewidth = 2, label = i[0], color=color)
     ax1.set_xlabel("Intensidad de gradiente g [mT/m]", fontsize=27)
     ax1.set_ylabel("Contraste $\mathrm{NOGSE}$ $\Delta M$", fontsize=27)
     #title = ax1.set_title(f"$N$ = {n} || D_0 = {D0_ext} m$^2$/ms", fontsize=18)
@@ -65,7 +82,7 @@ for i, color in zip([[17.5, n],[21.5, n],[25.0, n],[27.5, n],[30.0, n],[35.0, n]
     ax1.tick_params(axis='y', labelsize=16, color='black')
     #ax1.set_xlim(0, 1400)
 
-    ax2.plot(L_c_f, f, "-o", markersize=7, linewidth = 2, label = i[0])
+    ax2.plot(L_c_f, f, "-o", markersize=7, linewidth = 2, label = i[0], color=color)
     ax2.set_xlabel("Longitud de centro del filtro $L_C^f$", fontsize=27)
     ax2.set_ylabel("Contraste $\mathrm{NOGSE}$ $\Delta M$", fontsize=27)
     #title = ax2.set_title(f"$N$ = {n} || D_0 = {D0_ext} m$^2$/ms", fontsize=18)
@@ -75,7 +92,7 @@ for i, color in zip([[17.5, n],[21.5, n],[25.0, n],[27.5, n],[30.0, n],[35.0, n]
     ax2.tick_params(axis='y', labelsize=16, color='black')
     #ax2.set_xlim(0.4, 1.2)
 
-    ax3.plot(L_d, f, "-o", markersize=7, linewidth = 2, label= i[0])
+    ax3.plot(L_d, f, "-o", markersize=7, linewidth = 2, label= i[0], color=color)
     ax3.set_xlabel("Longitud de difusión $L_d$", fontsize=27)
     ax3.set_ylabel("Contraste $\mathrm{NOGSE}$ $\Delta M$", fontsize=27)
     #title = ax3.set_title(f"$N$ = {n} || D_0 = {D0_ext} m$^2$/ms", fontsize=18)
@@ -85,7 +102,7 @@ for i, color in zip([[17.5, n],[21.5, n],[25.0, n],[27.5, n],[30.0, n],[35.0, n]
     ax3.tick_params(axis='y', labelsize=16, color='black')
     #ax3.set_xlim(0.6, 4.6)
 
-    ax4.plot(l_c_f*1e6, f, "-o", markersize=7, linewidth = 2, label = i[0])
+    ax4.plot(l_c_f*1e6, f, "-o", markersize=7, linewidth = 2, label = i[0], color=color)
     ax4.set_xlabel("Longitud de centro del filtro $l_c^f ~[\mu m]$", fontsize=27)
     ax4.set_ylabel("Contraste $\mathrm{NOGSE}$ $\Delta M$", fontsize=27)
     #title = ax4.set_title(f"$N$ = {n} || D_0 = {D0_ext} m$^2$/ms", fontsize=18)

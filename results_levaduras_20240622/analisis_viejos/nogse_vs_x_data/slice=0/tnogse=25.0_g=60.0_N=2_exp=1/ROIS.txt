@@ -1,0 +1,3 @@
+ROI general: 227
+ROIS: 225 226 233 234 236 237 238 
+borro imagen 235

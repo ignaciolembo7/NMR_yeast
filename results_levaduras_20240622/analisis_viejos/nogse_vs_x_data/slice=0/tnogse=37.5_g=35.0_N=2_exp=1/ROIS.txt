@@ -1,0 +1,3 @@
+ROI general: 843
+ROIS: 
+borro imagen: 

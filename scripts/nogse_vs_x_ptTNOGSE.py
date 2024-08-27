@@ -12,22 +12,38 @@ n = 2
 roi = 'ROI1'
 slic = 0
 exp = 1
-num_grad = 'G2'
+num_grad = 'G1'
 file_name = "levaduras_20240622"
 folder = "nogse_vs_x_data"
 # Create directory if it doesn't exist
 directory = f"../results_{file_name}/nogse_vs_x_ptTNOGSE/"
 os.makedirs(directory, exist_ok=True)
 
-palette = sns.color_palette("tab10", 10) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
+#palette = sns.color_palette("tab10", 10) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
+
+# Definir manualmente una paleta de colores personalizada (sin verde ni naranja ya que los reservo para indicar las zonas intra y extracelular respectivamente).
+
+palette = [
+    #"#aec7e8"   # Azul claro
+    "#1f77b4",  # Azul
+    "#9467bd",  # Púrpura
+    "#e377c2",  # Rosa
+    #"#7f7f7f",  # Gris
+    "#8c564b",  # Marrón
+    "#f1c40f",  # Amarillo oscuro
+    "#d62728",  # Rojo
+]
+
+# Asignar la paleta personalizada
+sns.set_palette(palette)
 
 fig, ax = plt.subplots(figsize=(8,6))
 
 #print("T nogse = ", T_nogse, "ms")
-for i, color in zip([[17.5, 210.0, n], [21.5, 160.0, n],[25.0, 120.0, n],[30.0, 100.0, n],[35.0, 80.0, n],[40.0, 70.0, n]], palette):    
+for i, color in zip([[17.5, 105.0, n],[21.5, 75.0, n],[25.0, 60.0, n],[30.0, 50.0, n],[35.0, 40.0, n],[40.0, 30.0, n]], palette):   
     data = np.loadtxt(f"../results_{file_name}/{folder}/slice={slic}/tnogse={i[0]}_g={i[1]}_N={n}_exp={exp}/{roi}_data_nogse_vs_x_tnogse={i[0]}_g={i[1]}_N={n}.txt")
     x = data[:, 0]
-    f = data[:, 1]/data[0,1]
+    f = data[:, 1] #/data[0,1]
 
     #print("G = ", i[1], " - Contraste = ", f[-1] - f[0])
 

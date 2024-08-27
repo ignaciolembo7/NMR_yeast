@@ -1,0 +1,3 @@
+ROI general: 324
+ROIS: 330 331 334
+borro imagen: 332 333
