@@ -7,7 +7,7 @@ from protocols import nogse
 
 #Numero de serie del experimento1
 ns = input('Numero de serie: ') 
-file_name = "levaduras_20240622" #resultados
+file_name = "levaduras_20240613" #resultados
 im_path = f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}/"+str(ns)+"/pdata/1/2dseq" # dirección donde guardo la carpeta del experimento.
 slic = 0 # slice que quiero ver
 

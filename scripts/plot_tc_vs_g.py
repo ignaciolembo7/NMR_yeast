@@ -7,26 +7,33 @@ import seaborn as sns
 sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
-D0_ext = 2.3e-12 # m2/ms extra
-D0_int = 0.7e-12 # intra
-D0 = D0_ext
-
-n = 2 
-
 file_name = "levaduras_20240622"
 folder = "nogse_vs_x_restdist_mode"
 A0 = "sin_A0"
 slic = 0 # slice que quiero ver
+D0_folder = "D0_ext"
+
+D0_ext = 2.3e-12 # m2/ms extra
+D0_int = 0.7e-12 # intra
+D0 = D0_ext
+n = 2
 
 # Create directory if it doesn't exist
-directory = f"../results_{file_name}/{folder}"
+directory = f"../results_{file_name}/{folder}/{D0_folder}"
 os.makedirs(directory, exist_ok=True)
 
-fig2, ax2 = plt.subplots(figsize=(8,6)) 
-
-#gs = ["G1","G4","G3","G4"]
-rois =  ["ROI1","ROI1", "ROI1","ROI1","ROI1","ROI1","ROI1","ROI1","ROI1","ROI1"]
+palette = sns.color_palette("tab20", 4) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
+#palette = [
+#    "#1f77b4",  # Azul
+#    "#ff7f0e",  # Naranja
+#    "#f1c40f",  # Amarillo
+#    "#2ca02c",  # Verde
+#]
+#sns.set_palette(palette)
 tnogses = ["15.0","17.5","21.5","25.0","27.5","30.0","32.5","35.0","37.5","40.0"] 
+rois =  ["ROI1","ROI1", "ROI1","ROI1", "ROI1", "ROI1", "ROI1", "ROI1", "ROI1", "ROI1"]
+
+fig2, ax2 = plt.subplots(figsize=(8,6)) 
 
 for roi, tnogse in zip(rois, tnogses): 
 
@@ -37,6 +44,7 @@ for roi, tnogse in zip(rois, tnogses):
     #tnogse = data[:, 0]
     grad = data[:, 0]
     l_c = data[:, 2]
+    error_t_c = data[:, 3]
 
     # Obtener los índices que ordenarían grad
     sorted_indices = np.argsort(grad)
@@ -45,7 +53,6 @@ for roi, tnogse in zip(rois, tnogses):
     l_c = l_c[sorted_indices]
 
     t_c = (l_c**2)/(2*D0*1e12)
-    #error_t_c = data[:, 2]
 
     #remover los elementos en la posicion 4, 6, 8 de tnogse y t_c 
     #tnogse = np.delete(tnogse, [4, 6, 8])

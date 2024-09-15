@@ -7,23 +7,22 @@ import seaborn as sns
 sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
+file_name = "levaduras_20240613"
+folder = "contrast_vs_g_mixto_mixto"
+A0 = "con_A0"
+slic = 0 # slice que quiero ver
+D0_folder = "D0_ext"
+
 D0_ext = 2.3e-12 # m2/ms extra
 D0_int = 0.7e-12 # intra
-D0 = D0_ext
-
+D0 = D0_int
 n = 2
-
-file_name = "levaduras_20240622"
-folder = "nogse_vs_x_restdist_mode"
-A0 = "sin_A0"
-slic = 0 # slice que quiero ver
 
 # Create directory if it doesn't exist
 directory = f"../results_{file_name}/{folder}"
 os.makedirs(directory, exist_ok=True)
 
 #palette = sns.color_palette("tab20", 4) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
-
 palette = [
     "#1f77b4",  # Azul
     "#ff7f0e",  # Naranja
@@ -31,7 +30,7 @@ palette = [
     "#2ca02c",  # Verde
 ]
 sns.set_palette(palette)
-gs = ["G1","G2","G3","G4"]
+gs = ["int"]
 rois =  ["ROI1","ROI1", "ROI1","ROI1"]
 
 fig2, ax2 = plt.subplots(figsize=(8,6)) 
@@ -41,11 +40,11 @@ for roi, g, color in zip(rois, gs, palette):
 
     fig1, ax1 = plt.subplots(figsize=(8,6)) 
 
-    data = np.loadtxt(f"{directory}/{roi}_parameters_vs_tnogse_g={g}.txt")
+    data = np.loadtxt(f"{directory}/{roi}_parameters_vs_tnogse.txt")
 
     tnogse = data[:, 0]
-    M0 = data[:, 6]
-    error_M0 = data[:, 7]
+    M0 = data[:, 11]
+    error_M0 = data[:, 12]
 
     # Obtener los índices que ordenarían grad
     sorted_indices = np.argsort(tnogse)
@@ -86,5 +85,5 @@ for roi, g, color in zip(rois, gs, palette):
     title = ax2.set_title(f"$N$ = {n} | slice = {slic} ", fontsize=18)
 
 fig2.tight_layout()
-fig2.savefig(f"{directory}/M0_vs_tnogse_allG.png", dpi=600)
-fig2.savefig(f"{directory}/M0_vs_tnogse_allG.pdf")
+#fig2.savefig(f"{directory}/M0_vs_tnogse_allG.png", dpi=600)
+#fig2.savefig(f"{directory}/M0_vs_tnogse_allG.pdf")

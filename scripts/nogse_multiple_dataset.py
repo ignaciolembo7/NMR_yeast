@@ -10,7 +10,7 @@ import os
 exp = input("Experimento:")  # Nombre del experimento
 ns_start = int(input("Número de serie inicial: "))
 ns_end = int(input("Número de serie final: "))
-file_name = "levaduras_20240622"  # Nombre del archivo de resultados
+file_name = "levaduras_20230427"  # Nombre del archivo de resultados
 
 for ns in range(ns_start, ns_end + 1):
     im_path = f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}/{ns}/pdata/1/2dseq"  # Dirección donde se guarda la carpeta del experimento

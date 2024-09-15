@@ -2,9 +2,7 @@
 
 import cv2
 import numpy as np
-import argparse
 from brukerapi.dataset import Dataset as ds
-import matplotlib.pyplot as plt
 
 def draw_circle(event, x, y, flags, param):
     global center, radius, drawing, mode
@@ -59,7 +57,7 @@ serial = input("Serial:") #ms
 nrois = 1 #input("Nrois:") #ms
 slic = 0
 scaling_factor = 5 # Factor de escala (puedes ajustarlo según sea necesario)
-file_name = "levaduras_20240622"
+file_name = "levaduras_20230427"
 ims = ds(f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}/"+str(serial)+"/pdata/1/2dseq").data
 
 A0_matrix = ims[:,:,slic,0]

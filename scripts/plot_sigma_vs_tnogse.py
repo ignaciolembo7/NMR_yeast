@@ -7,19 +7,19 @@ import seaborn as sns
 sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
-D0_ext = 2.3e-12 # m2/ms extra
-D0_int = 0.7e-12 # intra
-D0 = D0_ext
-
-n = 2
-
 file_name = "levaduras_20240622"
 folder = "nogse_vs_x_restdist_mode"
 A0 = "sin_A0"
 slic = 0 # slice que quiero ver
+D0_folder = "D0_int"
+
+D0_ext = 2.3e-12 # m2/ms extra
+D0_int = 0.7e-12 # intra
+D0 = D0_int
+n = 2
 
 # Create directory if it doesn't exist
-directory = f"../results_{file_name}/{folder}"
+directory = f"../results_{file_name}/{folder}/{D0_folder}"
 os.makedirs(directory, exist_ok=True)
 
 #palette = sns.color_palette("tab20", 4) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
@@ -30,7 +30,7 @@ palette = [
     "#2ca02c",  # Verde
 ]
 sns.set_palette(palette)
-gs = ["G1","G2","G3","G4"]
+gs = ["G4"]
 rois =  ["ROI1","ROI1", "ROI1","ROI1"]
 
 fig2, ax2 = plt.subplots(figsize=(8,6)) 

@@ -34,7 +34,6 @@ sns.set_palette(palette)
 fig, ax = plt.subplots(figsize=(8,6))
 fig1, ax1 = plt.subplots(figsize=(8,6))
 
-
 #print("T nogse = ", T_nogse, "ms")
 
 for i, color in zip([[T_nogse, 75.0, n, 1],[T_nogse, 160.0, n, 2],[T_nogse, 300.0, n, 3],[T_nogse, 700.0, n, 4]], palette):
@@ -51,7 +50,7 @@ for i, color in zip([[T_nogse, 75.0, n, 1],[T_nogse, 160.0, n, 2],[T_nogse, 300.
     l_c = data3[:, 0]
     dist = data3[:, 1]
 
-    nogse.plot_nogse_vs_x_restdist_ptTNOGSE(ax, roi, x, x_fit, f, f_fit, i[0], i[1], i[2], slic, color, label = f" G{i[3]} = {i[1]}") 
+    nogse.plot_nogse_vs_x_restdist_ptG(ax, roi, x, x_fit, f, f_fit, i[0], i[1], i[2], slic, color, label = f" G{i[3]} = {i[1]}") 
     dist = dist/np.max(dist)
     nogse.plot_lognorm_dist_ptG(ax1, roi, i[0], i[1], i[2], l_c, dist, slic, color, label = f" G{i[3]} = {i[1]}")
 

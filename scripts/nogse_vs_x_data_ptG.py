@@ -13,10 +13,10 @@ n = 2
 roi = 'ROI1'
 slic = 0
 exp = 1
-file_name = "levaduras_20240622"
-folder = "nogse_vs_x_data"
+file_name = "levaduras_generated"
+folder = "nogse_vs_x_data_ptG"
 # Create directory if it doesn't exist
-directory = f"../results_{file_name}/nogse_vs_x_ptG/"
+directory = f"../results_{file_name}/{folder}/"
 os.makedirs(directory, exist_ok=True)
 
 palette = sns.color_palette("tab20", 4) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
