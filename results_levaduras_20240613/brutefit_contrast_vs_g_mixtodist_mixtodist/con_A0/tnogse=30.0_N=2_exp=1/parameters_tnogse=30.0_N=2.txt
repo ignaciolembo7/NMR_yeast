@@ -1,0 +1,10 @@
+ROI1  - lc_1 =  6.699999999999999 +- None
+       - sigma_1 =  0.1 +- None
+       - alpha_1 =  0.1 +- None
+       - M01 =  0.9 +- None
+       - D0_ext =  2.3e-12
+       - lc_2 =  1.7146428199482249 +- None
+       - sigma_2 =  0.001 +- None
+       - alpha_2 =  0.0 +- None
+       - M02 =  0.3 +- None
+       - D0_int =  7e-13

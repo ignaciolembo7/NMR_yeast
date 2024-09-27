@@ -1,23 +1,21 @@
-#NMRSI - Ignacio Lembo Ferrari - 09/09/2024
+#NMRSI - Ignacio Lembo Ferrari - 21/09/2024
 
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
-import os
 from protocols import nogse
-
-# Establecer tema de seaborn para las gráficas
+import os
+import seaborn as sns
 sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
-# Parámetros de simulación
-file_name = "simulations"
-folder = "Lc_vs_Ld"
+file_name = "levaduras_simulation"
+folder = "simulation_Lc_vs_Ld"
+modelo = "Mixto"
 
 # Parámetros de simulación
 n = 2
-alpha = 0.0  # 1 (libre) = inf (rest) = 1/alpha
-D0 = 0.7e-12  # m2/ms
+alpha = 0.3  # 1 = libre, 0 = rest
+D0 = 2.3e-12  # m2/ms
 gamma = 267.5221900  # 1/ms.mT
 
 # Crear directorio si no existe
@@ -26,7 +24,7 @@ os.makedirs(directory, exist_ok=True)
 
 # Inicialización de los parámetros de contraste
 Ld = np.linspace(0.2, 3.5, 1000)
-Lc = np.linspace(0.2, 10.0, 1000)
+Lc = np.linspace(0.2, 3.5, 1000)
 
 # Cálculo de las longitudes características
 #g_contrast = np.linspace(0.1, 1300, 2000)
@@ -39,10 +37,9 @@ Lc = np.linspace(0.2, 10.0, 1000)
 #Lc = lc/lg
 
 # Crear una grilla de valores para Ld y Lc usando meshgrid
-#Lc_grid, Ld_grid = np.meshgrid(lc / lg, ld / lg)
 Ld_grid, Lc_grid = np.meshgrid(Ld,Lc)
 
-contrast = nogse.delta_M_ad(Ld_grid, Lc_grid, n, alpha, D0)
+contrast = nogse.fit_contrast_vs_g_ad(Ld_grid, Lc_grid, n, alpha, D0)
 
 # Crear la figura para el mapa de colores continuo
 fig, ax = plt.subplots(figsize=(8, 6))
@@ -59,8 +56,8 @@ ax.contour(Ld_grid, Lc_grid, contrast, levels=10, colors='white', linewidths=0.5
 
 # Añadir rectas de pendiente tnogse/tc
 #tc_recta = [3.3,3.56,5.09,6.54,5.21,6.24,6.48,7.5]
-tc_recta = [2.2,2.12,1.71,1.61,2.04,1.38,1.59,2.0]
-tnogse_recta = [15.0, 17.5, 21.5, 25.0, 27.5, 30.0, 35.0, 40.0]
+tc_recta = [1.0, 3.0, 5.0, 7.0, 9.0]
+tnogse_recta = [21.5, 21.5, 21.5, 21.5, 21.5]
 #tnogse_recta = [1.0, 2.0, 2.5, 3.0, 5.0, 10.0, 15.0, 30.0, 45.0, 60.0, 100.0, 200.0, 300.0, 600.0] 
 pendientes = [tnogse_recta[i]/tc_recta[i] for i in range(len(tnogse_recta))]
 
@@ -97,9 +94,6 @@ title = ax.set_title(f"$N$ = {n} | $\\alpha$ = {alpha} | $D_0$ = {D0} ", fontsiz
 #     Lc = lc/lg
 #     ax.scatter(Ld, Lc, s=20, color='white')
 
-# Mostrar la figura
 plt.show()
-# Guardar la figura en diferentes formatos
 fig.savefig(f"{directory}/contrast_vs_Lc_vs_Ld.png", dpi=600)
-# Cerrar la figura para liberar memoria
 plt.close(fig)

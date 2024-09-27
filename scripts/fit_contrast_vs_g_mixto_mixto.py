@@ -1,4 +1,4 @@
-#NMRSI - Ignacio Lembo Ferrari - 28/05/2024
+#NMRSI - Ignacio Lembo Ferrari - 15/09/2024
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,13 +10,13 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240613"
-folder = "contrast_vs_g_mixto_mixto"
+folder = "fit_contrast_vs_g_mixto_mixto"
 A0 = "con_A0"
 D0_ext = 2.3e-12 # extra
 D0_int = 0.7e-12 # 0.7e-12 # intra
 exp = 1 #int(input('exp: '))
 slic = 0 # slice que quiero ver
-modelo = "Mixto+Mixto"  # nombre carpeta modelo libre/rest/tort
+modelo = "Mixto+Mixto" 
 
 tnogse = float(input('Tnogse [ms]: ')) #ms
 n = 2
@@ -46,23 +46,25 @@ for roi, color in zip(rois,palette):
     g, f = zip(*vectores_ordenados)
 
     #remover los elementos en la posicion _ de x y f 
-    g = np.delete(g, [0])
-    f = np.delete(f, [0])
+    #g = np.delete(g, [0])
+    #f = np.delete(f, [0])
 
     #modelo contrast_vs_g_intrarest_extrarestdist
     model = lmfit.Model(nogse.fit_contrast_vs_g_mixto_mixto, independent_vars=["TE", "G", "N", "D0_1", "D0_2"], param_names=["tc_1", "alpha_1", "M0_1", "tc_2", "alpha_2", "M0_2"])
-    model.set_param_hint("M0_1", value=0.80, min=0, max = 1.0, vary = 1)
+    model.set_param_hint("M0_1", value=0.8, min=0, max = 10000.0, vary = 1)
     #model.set_param_hint("M0_2", expr="1 - M0_1")
-    model.set_param_hint("M0_2", value=0.2, min=0, max = 1.0, vary = 1)
-    model.set_param_hint("tc_1", value=5.1, min = 0, max = 20.0, vary = 0)
-    model.set_param_hint("tc_2", value=2.0, min = 0, max = 10.0, vary = 0)
-    model.set_param_hint("alpha_1", value=0.30, min = 0, max=1, vary = 0)
+    model.set_param_hint("M0_2", value=0.2, min=0, max = 10000.0, vary = 1)
+    model.set_param_hint("tc_1", value=3.0, min = 0.1, max = 20.0, vary = 1)
+    model.set_param_hint("tc_2", value=1.7, min = 0.1, max = 10.0, vary = 1)
+    model.set_param_hint("alpha_1", value=0.3, min = 0, max=1, vary = 0)
     model.set_param_hint("alpha_2", value=0.03, min = 0, max=1, vary = 0)
     params = model.make_params()
 
     result = model.fit(f, params, TE=float(tnogse), G=g, N=n, D0_1= D0_ext, D0_2= D0_int) 
 
     print(result.params.pretty_print())
+    print(f"Chi cuadrado = {result.chisqr}")
+    print(f"Reduced chi cuadrado = {result.redchi}")
 
     M01_fit = result.params["M0_1"].value
     error_M01 = result.params["M0_1"].stderr
@@ -91,24 +93,26 @@ for roi, color in zip(rois,palette):
         print("     ",  " - alpha_2 = ", alpha_2_fit, "+-", error_alpha_2, file=a)
         print("     ",  " - M02 = ", M02_fit, "+-", error_M02, file=a)
         print("     ",  " - D0_int = ", D0_int, file=a)
+        print("     ",  " - Chi cuadrado = ", result.chisqr, file=a)
+        print("     ",  " - Reduced chi cuadrado = ", result.redchi, file=a)
 
     nogse.plot_contrast_vs_g_fit(ax, roi, modelo, g, g_fit, f, fit, tnogse, n, slic, color)
 
+    nogse.plot_contrast_vs_g_fit(ax1, "Extracelular", modelo, g, g_fit, f, fit_1, tnogse, n, slic, "orange")
+    nogse.plot_contrast_vs_g_fit(ax1, "Intracelular", modelo, g, g_fit, f, fit_2, tnogse, n, slic, "green")
+    ax1.fill_between(g_fit, 0, fit_1, color="orange", alpha=0.2)
+    ax1.fill_between(g_fit, 0, fit_2, color="green", alpha=0.2)
     nogse.plot_contrast_vs_g_fit(ax1, roi, modelo, g, g_fit, f, fit, tnogse, n, slic, color)
-    nogse.plot_contrast_vs_g_fit(ax1, roi, modelo, g, g_fit, f, fit_1, tnogse, n, slic, color)
-    nogse.plot_contrast_vs_g_fit(ax1, roi, modelo, g, g_fit, f, fit_2, tnogse, n, slic, color)
-    ax1.fill_between(g_fit, 0, fit_1, color=color, alpha=0.2)
-    ax1.fill_between(g_fit, 0, fit_2, color=color, alpha=0.2)
 
     table = np.vstack((g_fit, fit))
-    np.savetxt(f"{directory}/{roi}_ajuste_nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.txt", table.T, delimiter=' ', newline='\n')
+    np.savetxt(f"{directory}/{roi}_fit_contrast_vs_g_tnogse={tnogse}_N={int(n)}_exp={exp}.txt", table.T, delimiter=' ', newline='\n')
 
     fig1.tight_layout()
     fig1.savefig(f"{directory}/{roi}_contrast_vs_g_tnogse={tnogse}_N={int(n)}_exp={exp}.pdf")
     fig1.savefig(f"{directory}/{roi}_contrast_vs_g_tnogse={tnogse}_N={int(n)}_exp={exp}.png", dpi=600)
     plt.close(fig1)
 
-    with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_tnogse.txt", "a") as a:
+    with open(f"../results_{file_name}/{folder}/{A0}/{roi}_parameters_vs_tnogse.txt", "a") as a:
         print(tnogse, tc_1_fit, error_tc_1, alpha_1_fit, error_alpha_1, M01_fit, error_M01, tc_2_fit, error_tc_2, alpha_2_fit, error_alpha_2, M02_fit, error_M02, file=a)
 
 fig.tight_layout()

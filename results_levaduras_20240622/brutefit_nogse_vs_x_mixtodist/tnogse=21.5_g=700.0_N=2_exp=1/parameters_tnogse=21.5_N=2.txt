@@ -1,0 +1,7 @@
+ROI1  - l_c_mode =  1.54 +- None
+      - l_c_median =  1.5554772573096187 +-
+      - l_c_mid =  1.563274119508207 +-
+      - sigma =  0.1 +- None
+      - alpha =  0 +- None
+      - M0 =  860.0 +- None
+      - D0 =  7e-13 +-

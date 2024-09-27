@@ -1,0 +1,4 @@
+300.0 21.5 1.11 None 0.375 None 1100.0 None 2.1 None 0 None 900.0 None
+300.0 21.5 0.1 None 0.55 None 1700.0 None 2.1 None 0 None 900.0 None
+300.0 21.5 0.1 None 0.55 None 1700.0 None 2.1 None 0 None 900.0 None
+300.0 21.5 0.1 None 0.4 None 1000.0 None 2.1 None 0 None 900.0 None

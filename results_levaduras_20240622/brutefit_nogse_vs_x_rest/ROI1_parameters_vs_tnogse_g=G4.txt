@@ -1,0 +1,12 @@
+21.5 700.0 0.75 None 0.55 None 0.0 None 0.302 None 0.02 None 400.0 None
+21.5 700.0 0.75 None 0.55 None 0.0 None 2.322 None 0 None 1500.0 None
+21.5 700.0 0.75 None 0.55 None 0.0 None 2.12 None 0 None 1240.0 None
+25.0 600.0 0.75 None 0.55 None 0.0 None 1.918 None 0 None 640.0 None
+30.0 500.0 0.75 None 0.55 None 0.0 None 2.12 None 0 None 400.0 None
+27.5 550.0 0.75 None 0.55 None 0.0 None 1.918 None 0 None 400.0 None
+30.0 500.0 0.75 None 0.55 None 0.0 None 2.12 None 0 None 400.0 None
+35.0 400.0 0.75 None 0.55 None 0.0 None 1.716 None 0 None 160.0 None
+37.5 375.0 0.75 None 0.55 None 0.0 None 2.726 None 0 None 200.0 None
+40.0 350.0 0.75 None 0.55 None 0.0 None 1.918 None 0 None 120.0 None
+17.5 800.0 0.75 None 0.55 None 0.0 None 1.918 None 0 None 1440.0 None
+15.0 800.0 0.75 None 0.55 None 0.0 None 2.12 None 0 None 1680.0 None

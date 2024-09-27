@@ -1,0 +1,12 @@
+375.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+120.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+120.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+75.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+75.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+120.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+75.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+35.0 37.5 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
+375.0 37.5 0.1 None 0.549 None 408.31 None 1.82 None 0.0 None 104.64 None
+120.0 37.5 0.1 None 0.549 None 408.31 None 1.82 None 0.0 None 104.64 None
+75.0 37.5 0.1 None 0.549 None 408.31 None 1.82 None 0.0 None 104.64 None
+35.0 37.5 0.1 None 0.549 None 408.31 None 1.82 None 0.0 None 104.64 None

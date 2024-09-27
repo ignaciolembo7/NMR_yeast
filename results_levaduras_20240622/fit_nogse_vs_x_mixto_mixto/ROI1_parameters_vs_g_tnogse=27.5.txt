@@ -1,0 +1,7 @@
+550.0 27.5 0.72 None 0.546 None 1034 None 1.64 None 0.00045 None 332 None
+550.0 27.5 0.72 None 0.546 None 1034 None 1.64 None 0.00045 None 332 None
+550.0 27.5 0.72 None 0.546 None 1034 None 1.64 None 0.00045 None 332 None
+550.0 27.5 0.72 None 0.546 None 1034 None 1.64 None 0.0045 None 332 None
+190.0 27.5 0.72 None 0.546 None 1034 None 1.64 None 0.0045 None 332 None
+110.0 27.5 0.72 None 0.546 None 1034 None 1.64 None 0.0045 None 332 None
+55.0 27.5 0.72 None 0.546 None 1034 None 1.64 None 0.0045 None 332 None

@@ -1,0 +1,8 @@
+ROI1  - tc_1 =  10.049999999999999 +- None
+       - alpha_1 =  0.1 +- None
+       - M01 =  0.9 +- None
+       - D0_ext =  2.3e-12
+       - tc_2 =  2.08 +- None
+       - alpha_2 =  0.03 +- None
+       - M02 =  0.1 +- None
+       - D0_int =  7e-13

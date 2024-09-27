@@ -9,7 +9,8 @@ sns.set_style("whitegrid")
 
 file_name = "levaduras_20240613"
 folder = "contrast_vs_g_var_adimensional"
-directory = f"../results_{file_name}/{folder}/"
+A0 = "con_A0"
+directory = f"../results_{file_name}/{folder}/{A0}"
 os.makedirs(directory, exist_ok=True)
 
 #Constantes
@@ -53,7 +54,7 @@ sns.set_palette(palette)
 
 for i, color in zip([[17.5, n],[21.5, n],[25.0, n],[27.5, n],[30.0, n],[35.0, n],[40.0, n]], palette):    
 
-    data = np.loadtxt(f"../results_{file_name}/contrast_vs_g_data/tnogse={i[0]}_N={n}_exp={exp}/{roi}_data_contrast_vs_g_tnogse={i[0]}_N={n}.txt")
+    data = np.loadtxt(f"../results_{file_name}/contrast_vs_g_data/{A0}/tnogse={i[0]}_N={n}_exp={exp}/{roi}_data_contrast_vs_g_tnogse={i[0]}_N={n}.txt")
     g = data[:, 0]
     f = data[:, 1] #/data[0,1]
 
