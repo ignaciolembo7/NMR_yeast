@@ -10,14 +10,14 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240622"
-folder = "globalfit_nogse_vs_x_mixto_mixto"
+folder = "globalfit_nogse_vs_x_mixto_rest"
 A0 = "sin_A0"
 D0_ext = 2.3e-12 # extra
 D0_int = 0.7e-12 # intra
 n = 2
 exp = 1 #int(input('exp: '))
 slic = 0 # slice que quiero ver
-modelo = "Mixto+Mixto"
+modelo = "Mixto+Rest"
 
 palette = [
     "#1f77b4",  # Azul

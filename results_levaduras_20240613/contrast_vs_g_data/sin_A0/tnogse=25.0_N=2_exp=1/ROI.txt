@@ -1,0 +1,2 @@
+ROI: 259
+ROIS particulares: 248 249 251 252 256

@@ -1,5 +1,0 @@
-27.5 110.0 0.72 None 0.546 None 1034 None 1.64 None 0.0045 None 332 None
-37.5 120.0 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
-37.5 75.0 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
-37.5 75.0 0.1 None 0.549 None 408.31 None 1.78 None 0.0019 None 104.64 None
-37.5 75.0 0.1 None 0.549 None 408.31 None 1.82 None 0.0 None 104.64 None

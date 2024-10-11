@@ -108,7 +108,7 @@ for roi, color in zip(rois,palette):
     lc1_median = lc1_fit*np.exp(sigma1_fit**2)
     lc1_mid = lc1_median*np.exp((sigma1_fit**2)/2)
     lc2_median = lc2_fit*np.exp(sigma2_fit**2)
-    lc2_mid = lc1_median*np.exp((sigma2_fit**2)/2)
+    lc2_mid = lc2_median*np.exp((sigma2_fit**2)/2)
     lc = np.linspace(0.01, 30, 1000) #asi esta igual que en nogse.py
     dist1 = nogse.lognormal(lc, sigma1_fit, lc1_fit)
     nogse.plot_lognorm_dist(ax2, "Extracelular", tnogse, n, lc, lc1_fit, sigma1_fit, slic, color = "orange")

@@ -1,0 +1,16 @@
+ROI1  - lc_mode_1 =  2.0 +- None
+      - lc_median_1 =  2.000002000001 +-
+      - lc_mid_1 =  2.00000300000225 +-
+      - sigma_1 =  0.001 +- None
+      - alpha_1 =  0.57 +- None
+      - M0_1 =  925.0390967427319 +- None
+      - D0_1 =  2.3e-12 +-
+      - lc_mode_2 =  2.14 +- None
+      - lc_median_2 =  2.3415329671291505 +-
+      - lc_mid_2 =  2.4493087185118134 +-
+      - sigma_2 =  0.3 +- None
+      - alpha_2 =  0.0 +- None
+      - M0_2 =  790.099818591736 +- None
+      - D0_2 =  1e-12 +-
+      - Chi cuadrado =  240138.64456516306
+      - Reduced chi cuadrado =  3001.733057064538

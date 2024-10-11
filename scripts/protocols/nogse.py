@@ -413,8 +413,8 @@ def generate_NOGSE_vs_x_roi(image_paths, method_paths, mask, slic):
     
     for image_path, method_path in zip(image_paths, method_paths):
         ims = ds(image_path).data
-        #A0s.append(ims[:,:,slic,0]) 
-        experiments.append(ims[:,:,slic,0])
+        A0s.append(ims[:,:,slic,0]) 
+        experiments.append(ims[:,:,slic,1])
         param_dict = nogse_params(method_path)
         param_list = list(param_dict.values())
         params.append(param_list)
@@ -428,7 +428,7 @@ def generate_NOGSE_vs_x_roi(image_paths, method_paths, mask, slic):
     print("TE:\n",TE)
 
     M_matrix = np.array(experiments)
-    #A0_matrix = np.array(A0s)
+    A0_matrix = np.array(A0s)
     E_matrix = M_matrix #/A0_matrix
 
     for i in range(len(E_matrix)):
@@ -503,7 +503,7 @@ def plot_nogse_vs_x_data_generated(ax, modelo, label, label_title, x, f, tnogse,
 def plot_nogse_vs_x_data_ptG(ax, nroi, x, f, tnogse, g, n, slic, color):
     ax.plot(x, f, "-o", markersize=7, linewidth = 2, color = color, label=g)
     ax.set_xlabel("Tiempo de modulación $x$ [ms]", fontsize=27)
-    ax.set_ylabel("Señal $\mathrm{NOGSE}$ normalizada", fontsize=27) 
+    ax.set_ylabel("Señal $\mathrm{NOGSE}$", fontsize=27) 
     ax.legend(title='Gradiente [mT/m]', title_fontsize=15, fontsize=15, loc='best')
     ax.tick_params(direction='in', top=True, right=True, left=True, bottom=True)
     ax.tick_params(axis='x',rotation=0, labelsize=16, color='black')
@@ -566,34 +566,13 @@ def plot_nogse_vs_x_fit_ptG(ax, nroi, modelo, x, x_fit, f, fit, tnogse, n, slic,
     ax.tick_params(axis='y', labelsize=16, color='black')
     title = ax.set_title(f"{modelo} | $T_\mathrm{{NOGSE}}$ = {tnogse} ms | $N$ = {n} | slice = {slic} ", fontsize=15)
 
-def plot_nogse_vs_x_free(ax, nroi, modelo, x, x_fit, f, fit, tnogse, n, g, D0, slic, color):
-    ax.plot(x, f, "o", markersize=7, linewidth=2, color = color)
-    ax.plot(x_fit, fit, label= nroi + " - $D_0 = $" + str(round(D0,16)) + " m$^2/$ms", linewidth=2)
-    ax.legend(title_fontsize=15, fontsize=15, loc='best')
-    ax.set_xlabel("Tiempo de modulación x [ms]", fontsize=27)
-    ax.set_ylabel("Señal $\mathrm{NOGSE}$", fontsize=27)
-    ax.tick_params(direction='in', top=True, right=True, left=True, bottom=True)
-    ax.tick_params(axis='x',rotation=0, labelsize=16, color='black')
-    ax.tick_params(axis='y', labelsize=16, color='black')
-    title = ax.set_title(f"$T_\mathrm{{NOGSE}}$ = {tnogse} ms | $N$ = {n} | $G$ = {g} mT/m | slice = {slic} ", fontsize=15)
-
-def plot_nogse_vs_x_mixto(ax, nroi, modelo, x, x_fit, f, fit, tnogse, n, g, t_c, alpha):
-    ax.plot(x, f, "o", markersize=7, linewidth=2)
-    ax.plot(x_fit, fit, label= nroi + "- $\\tau_c = $" + str(round(t_c,4)) + " ms" + " - $\\alpha = $" + str(round(alpha,4)), linewidth=2)
-    ax.legend(title_fontsize=15, fontsize=18, loc='best')
-    ax.set_xlabel("Tiempo de modulación x [ms]", fontsize=18)
-    ax.set_ylabel("Señal $\mathrm{NOGSE}$", fontsize=18)
-    ax.tick_params(direction='in', top=True, right=True, left=True, bottom=True)
-    ax.tick_params(axis='x',rotation=0, labelsize=16, color='black')
-    ax.tick_params(axis='y', labelsize=16, color='black')
-    title = ax.set_title("{} | Modelo: {} | $T_\mathrm{{NOGSE}}$ = {} ms  |  $g$ = {} |  $N$ = {} ".format(nroi, modelo, tnogse, g, n), fontsize=18)
 
 def plot_contrast_vs_g_data(ax, nroi, g_contrast, f, error, tnogse, n, slic, color):
     #ax.errorbar(g_contrast, f, yerr=error, fmt='o', markersize=3, linewidth=2, label=nroi, capsize=5)
     ax.plot(g_contrast, f, 'o-', markersize=7, linewidth=2, color=color, label=nroi)
     ax.set_xlabel("Intensidad de gradiente $g$ [mT/m]", fontsize=27)
     ax.set_ylabel("Contraste $\mathrm{NOGSE}$ $\Delta M$", fontsize=27)
-    ax.legend(title='Experimento - Tiempo desde preparación:', title_fontsize=15, fontsize=15, loc='upper right')
+    ax.legend(title='ROI', title_fontsize=15, fontsize=15, loc='upper right')
     ax.tick_params(direction='in', top=True, right=True, left=True, bottom=True)
     ax.tick_params(axis='x', rotation=0, labelsize=16, color='black')
     ax.tick_params(axis='y', labelsize=16, color='black')
@@ -607,7 +586,7 @@ def plot_contrast_vs_g_data(ax, nroi, g_contrast, f, error, tnogse, n, slic, col
     #ax.set_xlim(0.5, 10.75)
 
 def plot_contrast_vs_g_ptTNOGSE(ax, nroi, modelo, g_contrast, f, tnogse, n, slic, color):
-    ax.plot(g_contrast, f, "-o", markersize=7, linewidth = 2, color=color, label= tnogse)
+    ax.plot(g_contrast, f, "-", markersize=7, linewidth = 2, color=color, label= tnogse)
     ax.set_xlabel("Intensidad de gradiente $g$ [mT/m]", fontsize=27)
     ax.set_ylabel("Contraste $\mathrm{NOGSE}$ $\Delta M$", fontsize=27)
     ax.legend(title='$T_\mathrm{{NOGSE}}$ [ms]', title_fontsize=15, fontsize=15, loc='upper right')
@@ -654,9 +633,11 @@ def plot_lognorm_dist(ax, nroi, tnogse, n, l_c, l_c_mode, sigma, slic, color):
     plt.axvline(x=l_c_mode, color=color, linestyle='-', label = "Moda") 
     plt.axvline(x=l_c_median, color=color, linestyle='--', label = "Mediana") 
     plt.axvline(x=l_c_mid, color=color, linestyle='-.', label = "Media") 
-    ax.plot(l_c, dist, "-", color=color, linewidth = 2, label = nroi)
+    #ax.plot(l_c, dist, "-", color=color, linewidth = 2, label = nroi)
     ax.set_xlabel("Longitud de correlación $l_c$ [$\mu$m]", fontsize=27)
+    #ax.set_xlabel("Diámetro de célula $d$ [$\mu$m]", fontsize=27)
     ax.set_ylabel("P($l_c$)", fontsize=27)
+    #ax.set_ylabel("P($d$)", fontsize=27)
     ax.legend(title='$T_\mathrm{{NOGSE}}$ [ms]', title_fontsize=15, fontsize=15, loc='upper right')
     ax.tick_params(direction='in', top=True, right=True, left=True, bottom=True)
     ax.tick_params(axis='x',rotation=0, labelsize=16, color='black')
@@ -792,6 +773,22 @@ def M_nogse_rest(TE, G, N, x, t_c, M0, D0):
 
     return M0 * np.exp(-bSE ** 2 * t_c ** 2 * (4 * np.exp(-y / t_c / 2) - np.exp(-y / t_c) - 3 + y / t_c)) * np.exp(-bSE ** 2 * t_c ** 2 * ((N - 1) * x / t_c + (-1) ** (N - 1) * np.exp(-(N - 1) * x / t_c) + 1 - 2 * N - 4 * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1) / 2) * (-np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1))) ** (N - 1) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) + 4 * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1) / 2) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) + 4 * (-np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1))) ** (N - 1) * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) ** 2 + 4 * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) * ((N - 1) * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + N - 2) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) ** 2)) * np.exp(2 * t_c ** 2 * ((np.exp((-y + 2 * x) / t_c / 2) + np.exp((x - 2 * y) / t_c / 2) - np.exp((x - y) / t_c) / 2 - np.exp(-y / t_c) / 2 + np.exp(x / t_c / 2) + np.exp(-y / t_c / 2) - np.exp(x / t_c) / 2 - 0.1e1 / 0.2e1) * (-1) ** (2 * N) + 2 * (-1) ** (1 + N) * np.exp(-(2 * N * x - 3 * x + y) / t_c / 2) + (np.exp(((3 - 2 * N) * x - 2 * y) / t_c / 2) - np.exp((-N * x + 2 * x - y) / t_c) / 2 + np.exp(-(2 * N * x - 4 * x + y) / t_c / 2) + np.exp(-(2 * N * x - 2 * x + y) / t_c / 2) - np.exp((-N * x + x - y) / t_c) / 2 + np.exp(-x * (-3 + 2 * N) / t_c / 2) - np.exp(-x * (N - 2) / t_c) / 2 - np.exp(-(N - 1) * x / t_c) / 2) * (-1) ** N + 2 * (-1) ** (1 + 2 * N) * np.exp((x - y) / t_c / 2)) * bSE ** 2 / (np.exp(x / t_c) + 1))
 
+def M_nogse_rest_offset(TE, G, N, x, t_c, M0, D0, C):
+
+    g = 267.52218744 # ms**-1 mT**-1
+    #[D0] = m2/ms
+
+    x = np.array(x)
+    TE = np.array(TE)
+    N = np.array(N)
+    G = np.array(G)
+
+    y = TE - (N-1) * x
+
+    bSE=g*G*np.sqrt(D0*t_c)
+
+    return C + M0 * np.exp(-bSE ** 2 * t_c ** 2 * (4 * np.exp(-y / t_c / 2) - np.exp(-y / t_c) - 3 + y / t_c)) * np.exp(-bSE ** 2 * t_c ** 2 * ((N - 1) * x / t_c + (-1) ** (N - 1) * np.exp(-(N - 1) * x / t_c) + 1 - 2 * N - 4 * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1) / 2) * (-np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1))) ** (N - 1) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) + 4 * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1) / 2) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) + 4 * (-np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1))) ** (N - 1) * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) ** 2 + 4 * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) * ((N - 1) * np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + N - 2) / (np.exp(-(N - 1) * x / t_c) ** (1 / (N - 1)) + 1) ** 2)) * np.exp(2 * t_c ** 2 * ((np.exp((-y + 2 * x) / t_c / 2) + np.exp((x - 2 * y) / t_c / 2) - np.exp((x - y) / t_c) / 2 - np.exp(-y / t_c) / 2 + np.exp(x / t_c / 2) + np.exp(-y / t_c / 2) - np.exp(x / t_c) / 2 - 0.1e1 / 0.2e1) * (-1) ** (2 * N) + 2 * (-1) ** (1 + N) * np.exp(-(2 * N * x - 3 * x + y) / t_c / 2) + (np.exp(((3 - 2 * N) * x - 2 * y) / t_c / 2) - np.exp((-N * x + 2 * x - y) / t_c) / 2 + np.exp(-(2 * N * x - 4 * x + y) / t_c / 2) + np.exp(-(2 * N * x - 2 * x + y) / t_c / 2) - np.exp((-N * x + x - y) / t_c) / 2 + np.exp(-x * (-3 + 2 * N) / t_c / 2) - np.exp(-x * (N - 2) / t_c) / 2 - np.exp(-(N - 1) * x / t_c) / 2) * (-1) ** N + 2 * (-1) ** (1 + 2 * N) * np.exp((x - y) / t_c / 2)) * bSE ** 2 / (np.exp(x / t_c) + 1))
+
 def M_nogse_mixto(TE, G, N, x, t_c, alpha, M0, D0): #alpha es 1/alpha
     return M0 * M_nogse_free(TE, G, N, x, 1, alpha*D0) * M_nogse_rest(TE, G, N, x, t_c, 1, (1-alpha)*D0)
 
@@ -804,7 +801,7 @@ def lognormal(l_c, sigma, l_c_mode):
 def fit_nogse_vs_x_mixtodistmode(TE, G, N, x, lc_mode, sigma, alpha, M0, D0):
 
     n = 100
-    lmax = 20 #um 
+    lmax = 40 #um 
 
     lcs = np.linspace(0.5, lmax, n) #menos que 0.5 hace que diverja el ajuste
     weights = lognormal(lcs, sigma, lc_mode)
@@ -817,7 +814,23 @@ def fit_nogse_vs_x_mixtodistmode(TE, G, N, x, lc_mode, sigma, alpha, M0, D0):
 
     return E
 
-def fit_nogse_vs_x_restdistmode(TE, G, N, x, l_c_mode, sigma, M0, D0):
+def fit_nogse_vs_x_mixtodistmode_offset(TE, G, N, x, lc_mode, sigma, alpha, M0, D0, C):
+
+    n = 100
+    lmax = 40 #um 
+
+    lcs = np.linspace(0.5, lmax, n) #menos que 0.5 hace que diverja el ajuste
+    weights = lognormal(lcs, sigma, lc_mode)
+    weights = weights/np.sum(weights)
+
+    E = np.zeros(len(x))
+
+    for lc, w in zip(lcs, weights):
+        E = E + M_nogse_mixto(TE, G, N, x, (lc**2)/(2*D0*1e12), alpha, M0, D0)*w
+
+    return E + C
+
+def fit_nogse_vs_x_restdistmode(TE, G, N, x, lc_mode, sigma, M0, D0):
 
     if sigma<0:
         return 1e20
@@ -826,7 +839,7 @@ def fit_nogse_vs_x_restdistmode(TE, G, N, x, l_c_mode, sigma, M0, D0):
     lmax = 40 #um esto es hasta un tau_c de 135ms
 
     l_cs = np.linspace(0.5, lmax, n) #menos que 0.5 hace que diverja el ajuste
-    weights = lognormal(l_cs, sigma, l_c_mode)
+    weights = lognormal(l_cs, sigma, lc_mode)
     weights = weights/np.sum(weights)
 
     E = np.zeros(len(x))
@@ -860,11 +873,23 @@ def fit_nogse_vs_x_restdistmode_restdistmode(TE, G, N, x, lc_mode_1, sigma_1, lc
 
     return E
 
-def fit_nogse_vs_x_mixto_mixto(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1, tc_2, alpha_2, M0_2, D0_2): #alpha es 1/alpha
-    return M_nogse_mixto(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1) + M_nogse_mixto(TE, G, N, x, tc_2, alpha_2, M0_2, D0_2)
+def fit_nogse_vs_x_free_rest(TE, G, N, x, alpha_1, M0_1, D0_1, tc_2, M0_2, D0_2): #alpha es 1/alpha
+    return M_nogse_free(TE, G, N, x, M0_1, alpha_1*D0_1) + M_nogse_rest(TE, G, N, x, tc_2, M0_2, D0_2)
 
 def fit_nogse_vs_x_free_mixto(TE, G, N, x, alpha_1, M0_1, D0_1, tc_2, alpha_2, M0_2, D0_2): #alpha es 1/alpha
     return M_nogse_free(TE, G, N, x, M0_1, alpha_1*D0_1) + M_nogse_mixto(TE, G, N, x, tc_2, alpha_2, M0_2, D0_2)
+
+def fit_nogse_vs_x_free_mixto_offset(TE, G, N, x, alpha_1, M0_1, D0_1, tc_2, alpha_2, M0_2, D0_2, C): #alpha es 1/alpha
+    return M_nogse_free(TE, G, N, x, M0_1, alpha_1*D0_1) + M_nogse_mixto(TE, G, N, x, tc_2, alpha_2, M0_2, D0_2) + C 
+
+def fit_nogse_vs_x_mixto_mixto(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1, tc_2, alpha_2, M0_2, D0_2): #alpha es 1/alpha
+    return M_nogse_mixto(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1) + M_nogse_mixto(TE, G, N, x, tc_2, alpha_2, M0_2, D0_2)
+
+def fit_nogse_vs_x_mixto_mixto_offset(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1, tc_2, alpha_2, M0_2, D0_2, C): #alpha es 1/alpha
+    return M_nogse_mixto(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1) + M_nogse_mixto(TE, G, N, x, tc_2, alpha_2, M0_2, D0_2) + C
+
+def fit_nogse_vs_x_mixto_mixtodist(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2): #alpha es 1/alpha
+    return M_nogse_mixto(TE, G, N, x, tc_1, alpha_1, M0_1, D0_1) + fit_nogse_vs_x_mixtodistmode(TE, G, N, x, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2)
 
 def fit_nogse_vs_x_mixtodist_mixtodist(TE, G, N, x, lc_mode_1, sigma_1, alpha_1, M0_1, D0_1, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2): #alpha es 1/alpha
     return fit_nogse_vs_x_mixtodistmode(TE, G, N, x, lc_mode_1, sigma_1, alpha_1, M0_1, D0_1) + fit_nogse_vs_x_mixtodistmode(TE, G, N, x, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2)
@@ -872,6 +897,8 @@ def fit_nogse_vs_x_mixtodist_mixtodist(TE, G, N, x, lc_mode_1, sigma_1, alpha_1,
 def fit_nogse_vs_x_free_mixtodist(TE, G, N, x, alpha_1, M0_1, D0_1, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2): #alpha es 1/alpha
     return M_nogse_free(TE, G, N, x, M0_1, alpha_1*D0_1) + fit_nogse_vs_x_mixtodistmode(TE, G, N, x, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2)
 
+def fit_nogse_vs_x_free_mixtodist_offset(TE, G, N, x, alpha_1, M0_1, D0_1, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2, C): #alpha es 1/alpha
+    return M_nogse_free(TE, G, N, x, M0_1, alpha_1*D0_1) + fit_nogse_vs_x_mixtodistmode(TE, G, N, x, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2) + C
 
 def fit_contrast_vs_g_free(TE, G, N, alpha, M0, D0): #alpha es 1/alpha
     return M_nogse_free(TE, G, N, TE/N, M0, alpha*D0) - M_nogse_free(TE, G, N, 0.5, M0, alpha*D0)
@@ -924,6 +951,9 @@ def fit_contrast_vs_g_mixtodist(TE, G, N, lc_mode, sigma, alpha, M0, D0):
 
     return E
 
+def fit_contrast_vs_g_mixto_mixtodist(TE, G, N, tc_1, alpha_1, M0_1, D0_1, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2):
+    return fit_contrast_vs_g_mixto(TE, G, N, tc_1, alpha_1, M0_1, D0_1) + fit_contrast_vs_g_mixtodist(TE, G, N, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2) 
+
 def fit_contrast_vs_g_mixtodist_mixtodist(TE, G, N, lc_mode_1, sigma_1, alpha_1, M0_1, D0_1, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2):
     return fit_contrast_vs_g_mixtodist(TE, G, N, lc_mode_1, sigma_1, alpha_1, M0_1, D0_1) + fit_contrast_vs_g_mixtodist(TE, G, N, lc_mode_2, sigma_2, alpha_2, M0_2, D0_2) 
 
@@ -932,6 +962,9 @@ def fit_contrast_vs_g_free_mixtodist(TE, G, N, alpha_1, M0_1, D0_1, lc_mode_2, s
 
 def fit_contrast_vs_g_mixto_mixto_free(TE, G, N, tc_1, alpha_1, M0_1, D0_1, tc_2, alpha_2, M0_2, D0_2, alpha_3, M0_3, D0_3):
     return fit_contrast_vs_g_mixto(TE, G, N, tc_1, alpha_1, M0_1, D0_1) + fit_contrast_vs_g_mixto(TE, G, N, tc_2, alpha_2, M0_2, D0_2) + fit_contrast_vs_g_free(TE, G, N, alpha_3, M0_3, D0_3)
+
+def fit_contrast_vs_g_mixto_mixto_mixto(TE, G, N, tc_1, alpha_1, M0_1, D0_1, tc_2, alpha_2, M0_2, D0_2, tc_3, alpha_3, M0_3, D0_3):
+    return fit_contrast_vs_g_mixto(TE, G, N, tc_1, alpha_1, M0_1, D0_1) + fit_contrast_vs_g_mixto(TE, G, N, tc_2, alpha_2, M0_2, D0_2) + fit_contrast_vs_g_mixto(TE, G, N, tc_3, alpha_3, M0_3, D0_3)
 
 def fit_contrast_vs_g_ad(Lc, Ld, n, alpha, D0): #Estan invertidos Lc y Ld y alpha es 1/alpha
     gamma = 267.52218744

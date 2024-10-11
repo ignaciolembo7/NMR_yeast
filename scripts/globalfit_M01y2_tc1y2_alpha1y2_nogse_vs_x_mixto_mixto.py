@@ -10,7 +10,7 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240622"
-folder = "globalfit_M0_tc_alpha_nogse_vs_x_mixto_mixto"
+folder = "globalfit_M01y2_tc1y2_alpha1y2_tc_alpha_nogse_vs_x_mixto_mixto"
 A0 = "sin_A0"
 D0_ext = 2.3e-12 # extra
 D0_int = 0.7e-12 # intra
@@ -32,27 +32,26 @@ palette = [
 num_grads = ["G1","G2","G3","G4"]
 rois = ["ROI1","ROI1","ROI1","ROI1"]
 
-#tnogses = [15.0,15.0,15.0,15.0]
-#gs=[100.0,275.0,600.0,1000.0]
-#tnogses = [17.5, 17.5, 17.5, 17.5]
-#gs = [105.0, 210.0, 405.0, 800.0]
-#tnogses = [21.5,21.5,21.5,21.5] 
-#gs = [75.0,160.0,300.0,700.0]
-#tnogses = [25.0, 25.0,25.0,25.0]
-#gs = [60.0,120.0,210.0,600.0]
-#tnogses = [27.5, 27.5, 27.5,27.5]
-#gs = [55.0, 110.0, 190.0, 550.0]
-#tnogses = [30.0,30.0,30.0,30.0]
-#gs = [50.0,100.0,170.0,500.0]
-#tnogses = [32.5,32.5,32.5,32.5]
-#gs = [45.0,90.0,150.0,450.0]
-#tnogses = [35.0,35.0,35.0,35.0]
-#gs = [40.0,80.0,130.0,400.0]
-#tnogses = [37.5,37.5,37.5,37.5]
-#gs = [35.0,75.0,120.0,375.0]
-tnogses = [40.0,40.0,40.0,40.0]
-gs = [30.0,70.0,110.0,350.0]
-
+tnogses = [15.0,15.0,15.0,15.0]
+gs=[100.0,275.0,600.0,1000.0]
+tnogses = [17.5, 17.5, 17.5, 17.5]
+gs = [105.0, 210.0, 405.0, 800.0]
+tnogses = [21.5,21.5,21.5,21.5] 
+gs = [75.0,160.0,300.0,700.0]
+tnogses = [25.0, 25.0,25.0,25.0]
+gs = [60.0,120.0,210.0,600.0]
+tnogses = [27.5, 27.5, 27.5,27.5]
+gs = [55.0, 110.0, 190.0, 550.0]
+tnogses = [30.0,30.0,30.0,30.0]
+gs = [50.0,100.0,170.0,500.0]
+tnogses = [32.5,32.5,32.5,32.5]
+gs = [45.0,90.0,150.0,450.0]
+tnogses = [35.0,35.0,35.0,35.0]
+gs = [40.0,80.0,130.0,400.0]
+tnogses = [37.5,37.5,37.5,37.5]
+gs = [35.0,75.0,120.0,375.0]
+# tnogses = [40.0,40.0,40.0,40.0]
+# gs = [30.0,70.0,110.0,350.0]
 
 # Create directory if it doesn't exist
 directory = f"../results_{file_name}/{folder}/tnogse={tnogses[0]}_N={int(n)}_exp={exp}"
@@ -79,12 +78,12 @@ for roi, tnogse, g, num_grad in zip(rois, tnogses, gs, num_grads):
 params = Parameters()
 #for i in range(len(xs)):
 
-params.add(f'tc1', value= 0.1, min=0.1, max=10.0, vary = 1)
-params.add(f'alpha1', value=0.5, min=0.1, max=1.0, vary = 1)
-params.add(f'tc2', value=1.95, min=1.0, max=15.0, vary = 1)
+params.add(f'tc1', value= 3.0, min=0.1, max=50.0, vary = 1)
+params.add(f'alpha1', value=0.57, min=0.1, max=1.0, vary = 0)
+params.add(f'tc2', value=2.6, min=1.0, max=15.0, vary = 1)
 params.add(f'alpha2', value=0.0, min=0.0, max=1.0, vary = 0)
-params.add('M01', value=5000, min=0, max=10000, vary=1)
-params.add('M02', value=5000, min=0, max=10000, vary=1)
+params.add('M01', value=2500, min=0, max=10000, vary=1)
+params.add('M02', value=2000, min=0, max=10000, vary=1)
 #params.add(f'D0_1', value=D0_ext, min = D0_int, max = D0_ext, vary=False)
 #params.add(f'D0_2', value=D0_int, min = D0_int, max = D0_ext, vary=False)
 
@@ -120,6 +119,8 @@ fig, ax = plt.subplots(1, 1, figsize=(8, 6))
 for i in range(len(xs)):
     
     fig1, ax1 = plt.subplots(figsize=(8,6)) 
+    fig2, ax2 = plt.subplots(figsize=(8,6)) 
+
 
     M01_fit = result.params[f'M01'].value
     M01_error = result.params[f'M01'].stderr
@@ -139,10 +140,11 @@ for i in range(len(xs)):
     fit_1 = nogse.M_nogse_mixto(tnogses[i], gs[i], n, x_fit, tc1_fit, alpha1_fit, M01_fit, D0_ext)
     fit_2 = nogse.M_nogse_mixto(tnogses[i], gs[i], n, x_fit, tc2_fit, alpha2_fit, M02_fit, D0_int)
 
-    #nogse.plot_nogse_vs_x_fit(ax1, "fit ext", modelo, xs[i], x_fit, fs[i], fit_1, tnogses[i], gs[i], n, slic, color = 'orange')
-    #nogse.plot_nogse_vs_x_fit(ax1, "fit int", modelo, xs[i], x_fit, fs[i], fit_2, tnogses[i], gs[i], n, slic, color = 'green')
+    nogse.plot_nogse_vs_x_fit(ax1, "fit ext", modelo, xs[i], x_fit, fs[i], fit_1, tnogses[i], gs[i], n, slic, color = 'orange')
+    nogse.plot_nogse_vs_x_fit(ax1, "fit int", modelo, xs[i], x_fit, fs[i], fit_2, tnogses[i], gs[i], n, slic, color = 'green')
     nogse.plot_nogse_vs_x_fit(ax, num_grads[i], modelo, xs[i], x_fit, fs[i], fit, tnogse, gs[i], n, slic, color = palette[i]) 
     nogse.plot_nogse_vs_x_fit(ax1, num_grads[i], modelo, xs[i], x_fit, fs[i], fit, tnogse, gs[i], n, slic, color = palette[i])
+    nogse.plot_nogse_vs_x_fit(ax2, num_grads[i], modelo, xs[i], x_fit, fs[i], fit, tnogse, gs[i], n, slic, color = palette[i]) 
 
     table = np.vstack((x_fit, fit))
     np.savetxt(f"{directory}/{roi}_fit_nogse_vs_x_tnogse={tnogse}_g={gs[i]}_N={int(n)}_exp={exp}.txt", table.T, delimiter=' ', newline='\n')
@@ -151,6 +153,11 @@ for i in range(len(xs)):
     fig1.savefig(f"{directory}/{roi}_nogse_vs_x_tnogse={tnogse}_g={gs[i]}_N={int(n)}_exp={exp}.pdf")
     fig1.savefig(f"{directory}/{roi}_nogse_vs_x_tnogse={tnogse}_g={gs[i]}_N={int(n)}_exp={exp}.png", dpi=600)
     plt.close(fig1)
+    
+    fig2.tight_layout()
+    fig2.savefig(f"../results_{file_name}/{folder}/{roi}_nogse_vs_x_tnogse={tnogse}_g={gs[i]}_N={int(n)}_exp={exp}.pdf")
+    fig2.savefig(f"../results_{file_name}/{folder}/{roi}_nogse_vs_x_tnogse={tnogse}_g={gs[i]}_N={int(n)}_exp={exp}.png", dpi=600)
+    plt.close(fig2)
 
 with open(f"{directory}/parameters_tnogse={tnogse}_N={int(n)}.txt", "a") as a:
     print(roi,  " - tc_1 = ", tc1_fit, "+-", tc1_error, file=a)
@@ -164,14 +171,10 @@ with open(f"{directory}/parameters_tnogse={tnogse}_N={int(n)}.txt", "a") as a:
     print("     ",  " - Chi cuadrado = ", result.chisqr, file=a)
     print("     ",  " - Reduced chi cuadrado = ", result.redchi, file=a)
 
-for roi, tnogse, g, num_grad in zip(rois, tnogses, gs, num_grads):
-    with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_g_tnogse={tnogse}.txt", "a") as a:
-        print(g, tnogse, tc1_fit, tc1_error, alpha1_fit, alpha1_error, M01_fit, M01_error, tc2_fit, tc2_error, alpha2_fit, alpha2_error, M02_fit, M02_error, file=a) 
-
-    with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_tnogse_g={num_grad}.txt", "a") as a:
-        print(tnogse, g, tc1_fit, tc1_error, alpha1_fit, alpha1_error, M01_fit, M01_error, tc2_fit, tc2_error, alpha2_fit, alpha2_error, M02_fit, M02_error, file=a) 
+with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_tnogse.txt", "a") as a:
+    print(tnogse, tc1_fit, tc1_error, alpha1_fit, alpha1_error, M01_fit, M01_error, tc2_fit, tc2_error, alpha2_fit, alpha2_error, M02_fit, M02_error, file=a) 
 
 fig.tight_layout()
-fig.savefig(f"{directory}/nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.pdf")
-fig.savefig(f"{directory}/nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.png", dpi=600)
+fig.savefig(f"../results_{file_name}/{folder}/nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.pdf")
+fig.savefig(f"../results_{file_name}/{folder}/nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.png", dpi=600)
 plt.close(fig)

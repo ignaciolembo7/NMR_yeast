@@ -10,7 +10,7 @@ import os
 exp = input("Experimento:")  # Nombre del experimento
 ns_start = int(input("Número de serie inicial: "))
 ns_end = int(input("Número de serie final: "))
-file_name = "levaduras_20230427"  # Nombre del archivo de resultados
+file_name = "levaduras_20240613"  # Nombre del archivo de resultados
 
 for ns in range(ns_start, ns_end + 1):
     im_path = f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}/{ns}/pdata/1/2dseq"  # Dirección donde se guarda la carpeta del experimento
@@ -32,7 +32,7 @@ for ns in range(ns_start, ns_end + 1):
         print(f"\nDiccionario con los parámetros de las imágenes para ns={ns}: \n params_img = {params_img}")
 
         # Asegurarse de que el directorio de resultados exista
-        result_dir = f"../results_{file_name}/images/tnogse={params['t_nogse']}_g={params['ramp_grad_str']}_exp={exp}"
+        result_dir = f"../results_{file_name}/images/tnogse={params['t_nogse']}_exp={exp}"
         os.makedirs(result_dir, exist_ok=True)
 
         # Plotear las imágenes

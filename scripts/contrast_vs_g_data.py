@@ -15,12 +15,12 @@ file_name = "levaduras_20240613"
 data_directory = f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}"
 folder = "contrast_vs_g_data"
 exp = input("Experimento:")
-A0 = "con_A0"
+A0 = "sin_A0"
 slic = 0
 rois = ["ROI1"]
 masks = [1]
 palette = sns.color_palette("tab10", len(rois)) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
-num_tnogse = 7
+#num_tnogse = 3
 
 image_paths, method_paths = nogse.upload_contrast_data_v2(data_directory, slic)
 
@@ -37,30 +37,28 @@ for roi, mask, color in zip(rois,masks,palette):
     directory = f"../results_{file_name}/{folder}/{A0}/tnogse={tnogse}_N={int(n)}_exp={exp}"
     os.makedirs(directory, exist_ok=True)
 
-    data_A0 = np.loadtxt(f"../results_{file_name}/contrast_vs_g_data/{A0}/tabla_A0_hahn_cpmg.txt")
+    # data_A0 = np.loadtxt(f"../results_{file_name}/contrast_vs_g_data/{A0}/tabla_A0_hahn_cpmg.txt")
+    # signal_A0_hahn = data_A0[num_tnogse, 1]
+    # signal_A0_error_hahn = data_A0[num_tnogse,2]
+    # signal_A0_cpmg = data_A0[num_tnogse, 3]
+    # signal_A0_error_cpmg = data_A0[num_tnogse,4]
+    # print(signal_A0_hahn, signal_A0_error_hahn, signal_A0_cpmg, signal_A0_error_cpmg)
+    # f_hahn_A0 = f_hahn/signal_A0_hahn
+    # f_cpmg_A0 = f_cpmg/signal_A0_cpmg
+    # error_hahn_A0 = f_hahn_A0*np.sqrt( (np.array(error_hahn)/np.array(f_hahn))**2 + (signal_A0_error_hahn/signal_A0_hahn)**2)
+    # error_cpmg_A0 = f_cpmg_A0*np.sqrt( (np.array(error_cpmg)/np.array(f_cpmg))**2 + (signal_A0_error_cpmg/signal_A0_cpmg)**2)
+    # f_A0 = f_cpmg_A0 - f_hahn_A0
+    # error_A0 = np.sqrt(error_hahn_A0**2 + error_cpmg_A0**2)
+    # print(g_contrast, f_A0, error_A0, f_hahn_A0, error_hahn_A0, f_cpmg_A0, error_cpmg_A0)
+    #table = np.vstack((g_contrast, f_A0, error_A0, f_hahn_A0, error_hahn_A0, f_cpmg_A0, error_cpmg_A0))
+    #np.savetxt(f"{directory}/{roi}_data_contrast_vs_g_tnogse={tnogse}_N={n}.txt", table.T, delimiter=' ', newline='\n')
+    # nogse.plot_contrast_vs_g_data(ax, roi, g_contrast, f_A0, error_A0, tnogse, n, slic, color)
+    # nogse.plot_contrast_vs_g_data(ax1, roi, g_contrast, f_A0, error_A0, tnogse, n, slic, color)
 
-    signal_A0_hahn = data_A0[num_tnogse, 1]
-    signal_A0_error_hahn = data_A0[num_tnogse,2]
-    signal_A0_cpmg = data_A0[num_tnogse, 3]
-    signal_A0_error_cpmg = data_A0[num_tnogse,4]
-
-    print(signal_A0_hahn, signal_A0_error_hahn, signal_A0_cpmg, signal_A0_error_cpmg)
-
-    f_hahn_A0 = f_hahn/signal_A0_hahn
-    f_cpmg_A0 = f_cpmg/signal_A0_cpmg
-
-    #propagación del error en el cociente
-    error_hahn_A0 = f_hahn_A0*np.sqrt( (np.array(error_hahn)/np.array(f_hahn))**2 + (signal_A0_error_hahn/signal_A0_hahn)**2)
-    error_cpmg_A0 = f_cpmg_A0*np.sqrt( (np.array(error_cpmg)/np.array(f_cpmg))**2 + (signal_A0_error_cpmg/signal_A0_cpmg)**2)
-
-    f_A0 = f_cpmg_A0 - f_hahn_A0
-    error_A0 = np.sqrt(error_hahn_A0**2 + error_cpmg_A0**2)
-
-    table = np.vstack((g_contrast, f_A0, error_A0, f_hahn_A0, error_hahn_A0, f_cpmg_A0, error_cpmg_A0))
+    table = np.vstack((g_contrast, f, error, f_hahn, error_hahn, f_cpmg, error_cpmg))
     np.savetxt(f"{directory}/{roi}_data_contrast_vs_g_tnogse={tnogse}_N={n}.txt", table.T, delimiter=' ', newline='\n')
-
-    nogse.plot_contrast_vs_g_data(ax, roi, g_contrast, f_A0, error_A0, tnogse, n, slic, color)
-    nogse.plot_contrast_vs_g_data(ax1, roi, g_contrast, f_A0, error_A0, tnogse, n, slic, color)
+    nogse.plot_contrast_vs_g_data(ax, roi, g_contrast, f, error, tnogse, n, slic, color)
+    nogse.plot_contrast_vs_g_data(ax1, roi, g_contrast, f, error, tnogse, n, slic, color)
 
     fig1.tight_layout()
     fig1.savefig(f"{directory}/{roi}_contrast_vs_g_tnogse={tnogse}_N={n}.pdf")

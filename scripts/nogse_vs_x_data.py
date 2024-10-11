@@ -10,8 +10,9 @@ sns.set_style("whitegrid")
 
 rois = ["ROI1"]
 
-file_name = "levaduras_20240622"
+file_name = "levaduras_20230427"
 folder = "nogse_vs_x_data"
+A0_folder = "sin_A0"
 data_directory = f"C:/Users/Ignacio Lembo/Documents/data/data_{file_name}"
 slic = 0 # slice que quiero ver
 exp = 1 
@@ -34,11 +35,11 @@ for roi in rois:
     T_nogse, g, x, n, f, error =  nogse.generate_NOGSE_vs_x_roi(image_paths, method_paths, mask, slic)
 
     # Create directory if it doesn't exist
-    directory = f"../results_{file_name}/{folder}/slice={slic}/tnogse={T_nogse}_g={g}_N={int(n)}_exp={exp}"
+    directory = f"../results_{file_name}/{folder}/slice={slic}/{A0_folder}/tnogse={T_nogse}_g={g}_N={int(n)}_exp={exp}"
     os.makedirs(directory, exist_ok=True)
 
-    nogse.plot_nogse_vs_x_data(ax, roi, x, f, error, T_nogse, n, slic)
-    nogse.plot_nogse_vs_x_data(ax1, roi, x, f, error, T_nogse, n, slic)
+    nogse.plot_nogse_vs_x_data(ax, roi, x, f, error, T_nogse, g, n, slic) 
+    nogse.plot_nogse_vs_x_data(ax1, roi, x, f, error, T_nogse, n, n, slic)
 
     table = np.vstack((x, f, error))
     np.savetxt(f"{directory}/{roi}_data_nogse_vs_x_tnogse={T_nogse}_g={g}_N={int(n)}.txt", table.T, delimiter=' ', newline='\n')
