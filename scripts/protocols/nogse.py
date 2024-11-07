@@ -481,7 +481,7 @@ def plot_nogse_vs_x_data(ax, nroi, x, f, error, tnogse, g, n, slic):
     #ax.errorbar(x, f, yerr=error, fmt='o-', markersize=3, linewidth=2, capsize=5, label=nroi)
     ax.set_xlabel("Tiempo de modulación $x$ [ms]", fontsize=27)
     ax.set_ylabel("Señal $\mathrm{NOGSE}$", fontsize=27)
-    ax.legend(title='ROI', title_fontsize=15, fontsize=15, loc='lower right')
+    ax.legend(title_fontsize=15, fontsize=15, loc='lower right')
     ax.tick_params(direction='in', top=True, right=True, left=True, bottom=True)
     ax.tick_params(axis='x',rotation=0, labelsize=16, color='black')
     ax.tick_params(axis='y', labelsize=16, color='black')
@@ -850,9 +850,6 @@ def fit_nogse_vs_x_restdistmode(TE, G, N, x, lc_mode, sigma, M0, D0):
     return E
 
 def fit_nogse_vs_x_restdistmode_restdistmode(TE, G, N, x, lc_mode_1, sigma_1, lc_mode_2, sigma_2, M0_1, M0_2, D0_1, D0_2):
-    #sigma = 0.06416131084794455
-    #l_cmid = 7.3*10**-6
-
     if sigma_1<0 or sigma_2<0:
         return 1e20
 
@@ -919,9 +916,7 @@ def fit_contrast_vs_g_restdistmode(TE, G, N, l_c_mode, sigma, M0, D0):
     for l_c, w in zip(l_cs, weights):
         E = E + fit_contrast_vs_g_rest(TE, G, N, (l_c**2)/(2*D0*1e12) , M0, D0)*w
 
-    return M0*E
-
-    return fit_contrast_vs_g_rest(TE, G, N, ((l_c_int*1e-6)**2)/(2*D0_int), M0_int, D0_int) + fit_contrast_vs_g_restdist(TE, G, N, l_c_mode_ext, sigma_ext, M0_ext, D0_ext)
+    return E
 
 def fit_contrast_vs_g_mixto(TE, G, N, t_c, alpha, M0, D0):
     return M_nogse_mixto(TE, G, N, TE/N, t_c, alpha, M0, D0) - M_nogse_mixto(TE, G, N, 0.5, t_c, alpha, M0, D0) 

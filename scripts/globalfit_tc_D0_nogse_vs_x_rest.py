@@ -114,8 +114,8 @@ for i in range(len(xs)):
     plt.close(fig1)
 
 with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_tnogse.txt", "a") as a:
-    print(tnogse, tc_fit, tc_error, file=a) 
+    print(tc_fit, tc_error, file=a) 
 
 with open(f"../results_{file_name}/{folder}/{roi}_M0_vs_tnogse.txt", "a") as a:
     for i in range(len(xs)):
-        print(tnogse, M0_fits[i], M0_errors[i], file=a)
+        print(tnogse[i], M0_fits[i], M0_errors[i], file=a)

@@ -71,7 +71,7 @@ for tnogse, g in zip(tnogses, G4):
         M0_fit = result.params["M0"].value
         lc_fit = result.params["lc_mode"].value
         sigma_fit = result.params["sigma"].value
-        alpha_fit = result.params["alpha"].stderr
+        alpha_fit = result.params["alpha"].value
         M0_error = result.params["M0"].stderr
         lc_error = result.params["lc_mode"].stderr
         sigma_error = result.params["sigma"].stderr

@@ -39,7 +39,7 @@ for roi in rois:
     os.makedirs(directory, exist_ok=True)
 
     nogse.plot_nogse_vs_x_data(ax, roi, x, f, error, T_nogse, g, n, slic) 
-    nogse.plot_nogse_vs_x_data(ax1, roi, x, f, error, T_nogse, n, n, slic)
+    nogse.plot_nogse_vs_x_data(ax1, roi, x, f, error, T_nogse, g, n, slic)
 
     table = np.vstack((x, f, error))
     np.savetxt(f"{directory}/{roi}_data_nogse_vs_x_tnogse={T_nogse}_g={g}_N={int(n)}.txt", table.T, delimiter=' ', newline='\n')

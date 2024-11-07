@@ -10,19 +10,24 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 tnogses = [15.0, 17.5, 21.5, 25.0, 27.5, 30.0, 32.5, 35.0, 37.5, 40.0]
-#G1 = [100.0, 105.0, 75.0, 60.0, 55.0, 50.0, 45.0, 40.0, 35.0, 30.0]
-# G2 = [275.0, 210.0, 160.0, 120.0, 110.0, 100.0, 90.0, 80.0, 75.0, 70.0]
-# G3 = [600.0, 405.0, 300.0, 210.0, 190.0, 170.0, 150.0, 130.0, 120.0, 110.0]
-G4 = [1000.0, 800.0, 700.0, 600.0, 550.0, 500.0, 450.0, 400.0, 375.0, 350.0]
+# gs = [100.0, 105.0, 75.0, 60.0, 55.0, 50.0, 45.0, 40.0, 35.0, 30.0]
+# gs = [275.0, 210.0, 160.0, 120.0, 110.0, 100.0, 90.0, 80.0, 75.0, 70.0]
+# gs = [600.0, 405.0, 300.0, 210.0, 190.0, 170.0, 150.0, 130.0, 120.0, 110.0]
+gs = [1000.0, 800.0, 700.0, 600.0, 550.0, 500.0, 450.0, 400.0, 375.0, 350.0]
+
+# M0_ints = [1573, 1416, 1109, 714, 407, 398, 198, 225, 123, 135]
+# tc_ints = [1.99, 1.99, 2.10, 2.13, 2.03, 2.19, 2.08, 2.27, 2.16, 2.24]
+alpha_exts = [0.57,0.57,0.57,0.44,0.37,0.34,0.32,0.3,0.3,0.3]
+tc_ints = [2.14, 1.93, 1.86, 2.39, 1.87, 2.18, 2.20, 1.93, 2.18, 2.20]
 
 file_name = "levaduras_20240622"
-folder = "fit_nogse_vs_x_mixto_mixto"
+folder = "fit_nogse_vs_x_mixto_rest_G=G3"
 A0 = "sin_A0"
 D0_ext = 2.3e-12 # extra
-D0_int = 0.7e-12 # 0.7e-12 # intra
+D0_int = 0.65e-12 # 0.7e-12 # intra
 exp = 1 #int(input('exp: '))
 slic = 0 # slice que quiero ver
-modelo = "Mixto+Mixto"
+modelo = "Mixto+Rest"
 
 num_grad = input('Gradiente: ')
 #tnogse = float(input('Tnogse [ms]: ')) #ms
@@ -30,7 +35,7 @@ num_grad = input('Gradiente: ')
 n = 2
 rois = ["ROI1"]
 
-for tnogse, g in zip(tnogses, G4):
+for tnogse, g, tc_int, alpha_ext in zip(tnogses, gs, tc_ints, alpha_exts):
 
     fig, ax = plt.subplots(figsize=(8,6)) 
     palette = sns.color_palette("tab10", len(rois)) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
@@ -57,11 +62,13 @@ for tnogse, g in zip(tnogses, G4):
         #f = np.delete(f, [8,9,10,11,12])
 
         model = lmfit.Model(nogse.fit_nogse_vs_x_mixto_mixto, independent_vars=["TE", "G", "N", "x", "D0_1", "D0_2"], param_names=["tc_1", "alpha_1", "M0_1", "tc_2", "alpha_2", "M0_2"])
-        model.set_param_hint("M0_1", value=1766, min=0, max = 10000, vary = 1)
-        model.set_param_hint("M0_2", value=1162, min=0, max = 10000, vary = 1)
+        model.set_param_hint("M0_1", value=2000, min=0, max = 5000, vary = 1)
+        model.set_param_hint("M0_2", value=1000, min=0, max = 5000, vary = 1)
+        ##model.set_param_hint("M0_2", expr="0.1494*M0_1") 
+        #model.set_param_hint("M0_2", expr="(9/11)*M0_1")
         model.set_param_hint("tc_1", value=10.0, min = 0.1, max = 50.0, vary = 1)
-        model.set_param_hint("tc_2", value=2.21, min = 0.1, max = 10.0, vary = 0)
-        model.set_param_hint("alpha_1", value=0.0, min = 0, max = 1, vary = 0)
+        model.set_param_hint("tc_2", value=tc_int, min = 0.1, max = 10.0, vary = 0)
+        model.set_param_hint("alpha_1", value=alpha_ext, min = 0, max = 1, vary = 0)
         model.set_param_hint("alpha_2", value=0.0, min = 0, max = 1, vary = 0)
         params = model.make_params()
 

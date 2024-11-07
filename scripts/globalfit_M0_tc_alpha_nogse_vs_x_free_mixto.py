@@ -10,10 +10,10 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240622"
-folder = "globalfit_M0_tc_alpha_nogse_vs_x_free_rest"
+folder = "globalfit_M0_tc_alpha_nogse_vs_x_free_rest_G=G1"
 A0 = "sin_A0"
 D0_ext = 2.3e-12 # extra
-D0_int = 0.65e-12 # intra
+D0_int = 0.7e-12 # intra
 n = 2
 exp = 1 #int(input('exp: '))
 slic = 0 # slice que quiero ver
@@ -21,16 +21,16 @@ modelo = "Free+Rest"
 
 palette = [
     "#1f77b4",  # Azul
-    "#9467bd",  # Púrpura
+    #"#9467bd",  # Púrpura
     #"#e377c2",  # Rosa
     #"#7f7f7f",  # Gris
-    "#8c564b",  # Marrón
+    #"#8c564b",  # Marrón
     #"#f1c40f",  # Amarillo
     "#d62728",  # Rojo
 ]
 
-num_grads = ["G1","G2","G3","G4"]
-rois = ["ROI1","ROI1","ROI1","ROI1"]
+# num_grads = ["G3","G4"]
+# rois = ["ROI1","ROI1","ROI1","ROI1"]
 
 # tnogses = [15.0,15.0,15.0,15.0]
 # gs = [100.0,275.0,600.0,1000.0]
@@ -50,9 +50,52 @@ rois = ["ROI1","ROI1","ROI1","ROI1"]
 # gs = [40.0,80.0,130.0,400.0]
 # tnogses = [37.5,37.5,37.5,37.5]
 # gs = [35.0,75.0,120.0,375.0]
-tnogses = [40.0,40.0,40.0,40.0]
-gs = [30.0,70.0,110.0,350.0]
+# tnogses = [40.0,40.0,40.0,40.0]
+# gs = [30.0,70.0,110.0,350.0]
 
+num_grads = ["G1","G4"]
+rois = ["ROI1","ROI1"]
+
+tnogses = [15.0,15.0]
+gs = [100.0,1000.0]
+tc_int = 1.93
+M0_int = 1650.2 
+tnogses = [17.5, 17.5]
+gs = [105.0, 800.0]
+tc_int = 1.94
+M0_int = 1474.4
+tnogses = [21.5,21.5]
+gs = [75.0,700.0]
+tc_int = 2.04
+M0_int = 1161.6
+tnogses = [25.0, 25.0]
+gs = [60.0,600.0]
+tc_int = 2.08
+M0_int = 746.5
+tnogses = [27.5, 27.5]
+gs = [55.0,550.0]
+tc_int = 1.98
+M0_int = 423.0
+tnogses = [30.0,30.0]
+gs = [50.0,500.0]
+tc_int = 2.14
+M0_int = 414.7
+tnogses = [32.5,32.5]
+gs = [45.0,450.0]
+tc_int = 2.04
+M0_int = 204.8
+tnogses = [35.0,35.0]
+gs = [40.0,400.0]
+tc_int = 2.22
+M0_int = 232.9
+tnogses = [37.5,37.5]
+gs = [35.0,375.0]
+tc_int = 2.12
+M0_int = 127.5
+tnogses = [40.0,40.0]
+gs = [30.0,350.0]
+tc_int = 2.19
+M0_int = 139.4
 
 # Create directory if it doesn't exist
 directory = f"../results_{file_name}/{folder}/tnogse={tnogses[0]}_N={int(n)}_exp={exp}"
@@ -79,11 +122,11 @@ for roi, tnogse, g, num_grad in zip(rois, tnogses, gs, num_grads):
 params = Parameters()
 #for i in range(len(xs)):
 
-params.add(f'alpha1', value=0.57, min=0.1, max=1.0, vary = 1)
-params.add(f'tc2', value=2.039, min=1.0, max=15.0, vary = 1)
+params.add(f'alpha1', value=0.57, min=0.1, max=1.0, vary = 0)
+params.add(f'tc2', value=tc_int, min=1.0, max=15.0, vary = 1)
 params.add(f'alpha2', value=0.0, min=0.0, max=1.0, vary = 0)
 params.add('M01', value=2500, min=0, max=10000, vary=1)
-params.add('M02', value=1000, min=0, max=10000, vary=1)
+params.add('M02', value=M0_int, min=0, max=10000, vary=1)
 #params.add(f'D0_1', value=D0_ext, min = D0_int, max = D0_ext, vary=False)
 #params.add(f'D0_2', value=D0_int, min = D0_int, max = D0_ext, vary=False)
 

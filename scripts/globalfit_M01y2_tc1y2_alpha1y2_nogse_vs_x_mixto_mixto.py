@@ -10,14 +10,14 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240622"
-folder = "globalfit_M01y2_tc1y2_alpha1y2_tc_alpha_nogse_vs_x_mixto_mixto"
+folder = "globalfit_M01y2_tc1y2_alpha1y2_tc_alpha_nogse_vs_x_mixto_rest_G=G1"
 A0 = "sin_A0"
 D0_ext = 2.3e-12 # extra
 D0_int = 0.7e-12 # intra
 n = 2
 exp = 1 #int(input('exp: '))
 slic = 0 # slice que quiero ver
-modelo = "Mixto+Mixto"
+modelo = "Mixto+Rest"
 
 palette = [
     "#1f77b4",  # Azul
@@ -29,29 +29,101 @@ palette = [
     "#d62728",  # Rojo
 ]
 
-num_grads = ["G1","G2","G3","G4"]
-rois = ["ROI1","ROI1","ROI1","ROI1"]
+# num_grads = ["G1","G2","G3","G4"]
+# rois = ["ROI1","ROI1","ROI1","ROI1"]
 
-tnogses = [15.0,15.0,15.0,15.0]
-gs=[100.0,275.0,600.0,1000.0]
-tnogses = [17.5, 17.5, 17.5, 17.5]
-gs = [105.0, 210.0, 405.0, 800.0]
-tnogses = [21.5,21.5,21.5,21.5] 
-gs = [75.0,160.0,300.0,700.0]
-tnogses = [25.0, 25.0,25.0,25.0]
-gs = [60.0,120.0,210.0,600.0]
-tnogses = [27.5, 27.5, 27.5,27.5]
-gs = [55.0, 110.0, 190.0, 550.0]
-tnogses = [30.0,30.0,30.0,30.0]
-gs = [50.0,100.0,170.0,500.0]
-tnogses = [32.5,32.5,32.5,32.5]
-gs = [45.0,90.0,150.0,450.0]
-tnogses = [35.0,35.0,35.0,35.0]
-gs = [40.0,80.0,130.0,400.0]
-tnogses = [37.5,37.5,37.5,37.5]
-gs = [35.0,75.0,120.0,375.0]
-# tnogses = [40.0,40.0,40.0,40.0]
-# gs = [30.0,70.0,110.0,350.0]
+# tnogses = [15.0,15.0,15.0,15.0]
+# gs=[100.0,275.0,600.0,1000.0]
+# tnogses = [17.5, 17.5, 17.5, 17.5]
+# gs = [105.0, 210.0, 405.0, 800.0]
+# tnogses = [21.5,21.5,21.5,21.5] 
+# gs = [75.0,160.0,300.0,700.0]
+# tnogses = [25.0, 25.0,25.0,25.0]
+# gs = [60.0,120.0,210.0,600.0]
+# tnogses = [27.5, 27.5, 27.5,27.5]
+# gs = [55.0, 110.0, 190.0, 550.0]
+# tnogses = [30.0,30.0,30.0,30.0]
+# gs = [50.0,100.0,170.0,500.0]
+# tnogses = [32.5,32.5,32.5,32.5]
+# gs = [45.0,90.0,150.0,450.0]
+# tnogses = [35.0,35.0,35.0,35.0]
+# gs = [40.0,80.0,130.0,400.0]
+# tnogses = [37.5,37.5,37.5,37.5]
+# gs = [35.0,75.0,120.0,375.0]
+# # tnogses = [40.0,40.0,40.0,40.0]
+# # gs = [30.0,70.0,110.0,350.0]
+
+num_grads = ["G1","G4"]
+rois = ["ROI1","ROI1"]
+alpha_ext = 0.30
+tnogses = [15.0,15.0]
+gs = [100.0,1000.0]
+tnogses = [17.5, 17.5]
+gs = [105.0, 800.0]
+tnogses = [21.5,21.5]
+gs = [75.0,700.0]
+tnogses = [25.0, 25.0]
+gs = [60.0,600.0]
+tnogses = [27.5, 27.5]
+gs = [55.0,550.0]
+tnogses = [30.0,30.0]
+gs = [50.0,500.0]
+tnogses = [32.5,32.5]
+gs = [45.0,450.0]
+tnogses = [35.0,35.0]
+gs = [40.0,400.0]
+tnogses = [37.5,37.5]
+gs = [35.0,375.0]
+# tnogses = [40.0,40.0]
+# gs = [30.0,350.0]
+
+# num_grads = ["G3","G4"]
+# rois = ["ROI1","ROI1"]
+# alpha_ext = 0.30
+# tnogses = [15.0,15.0]
+# gs = [600.0,1000.0]
+# tnogses = [17.5, 17.5]
+# gs = [405.0,800.0]
+# tnogses = [21.5,21.5]
+# gs = [300.0,700.0]
+# tnogses = [25.0, 25.0]
+# gs = [210.0,600.0]
+# tnogses = [27.5, 27.5]
+# gs = [190.0,550.0]
+# tnogses = [30.0,30.0]
+# gs = [170.0,500.0]
+# tnogses = [32.5,32.5]
+# gs = [150.0,450.0]
+# tnogses = [35.0,35.0]
+# gs = [130.0,400.0]
+# tnogses = [37.5,37.5]
+# gs = [120.0,375.0]
+# tnogses = [40.0,40.0]
+# gs = [110.0,350.0]
+
+# num_grads = ["G2","G4"]
+# rois = ["ROI1","ROI1"]
+#alpha_ext = 0.30
+# tnogses = [15.0,15.0]
+# gs = [275.0,1000.0]
+# tnogses = [17.5, 17.5]
+# gs = [210.0,800.0]
+# tnogses = [21.5,21.5]
+# gs = [160.0,700.0]
+# tnogses = [25.0, 25.0]
+# gs = [120.0,600.0]
+# tnogses = [27.5, 27.5]
+# gs = [110.0,550.0]
+# tnogses = [30.0,30.0]
+# gs = [100.0,500.0]
+# tnogses = [32.5,32.5]
+# gs = [90.0,450.0]
+# tnogses = [35.0,35.0]
+# gs = [80.0,400.0]
+# tnogses = [37.5,37.5]
+# gs = [75.0,375.0]
+# tnogses = [40.0,40.0]
+# gs = [70.0,350.0]
 
 # Create directory if it doesn't exist
 directory = f"../results_{file_name}/{folder}/tnogse={tnogses[0]}_N={int(n)}_exp={exp}"
@@ -78,8 +150,8 @@ for roi, tnogse, g, num_grad in zip(rois, tnogses, gs, num_grads):
 params = Parameters()
 #for i in range(len(xs)):
 
-params.add(f'tc1', value= 3.0, min=0.1, max=50.0, vary = 1)
-params.add(f'alpha1', value=0.57, min=0.1, max=1.0, vary = 0)
+params.add(f'tc1', value= 3.0, min=0.1, max=100.0, vary = 1)
+params.add(f'alpha1', value=alpha_ext, min=0.1, max=1.0, vary = 0)
 params.add(f'tc2', value=2.6, min=1.0, max=15.0, vary = 1)
 params.add(f'alpha2', value=0.0, min=0.0, max=1.0, vary = 0)
 params.add('M01', value=2500, min=0, max=10000, vary=1)
@@ -110,6 +182,7 @@ def objective_function(params, x_list=xs, fs_list=fs):
 result = minimize(objective_function, params)
 
 # Display fitting results
+print("Tnogse =", tnogses[0])
 print(result.params.pretty_print())
 print(f"Chi cuadrado = {result.chisqr}")
 print(f"Reduced chi cuadrado = {result.redchi}")
@@ -120,7 +193,6 @@ for i in range(len(xs)):
     
     fig1, ax1 = plt.subplots(figsize=(8,6)) 
     fig2, ax2 = plt.subplots(figsize=(8,6)) 
-
 
     M01_fit = result.params[f'M01'].value
     M01_error = result.params[f'M01'].stderr
@@ -175,6 +247,6 @@ with open(f"../results_{file_name}/{folder}/{roi}_parameters_vs_tnogse.txt", "a"
     print(tnogse, tc1_fit, tc1_error, alpha1_fit, alpha1_error, M01_fit, M01_error, tc2_fit, tc2_error, alpha2_fit, alpha2_error, M02_fit, M02_error, file=a) 
 
 fig.tight_layout()
-fig.savefig(f"../results_{file_name}/{folder}/nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.pdf")
-fig.savefig(f"../results_{file_name}/{folder}/nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.png", dpi=600)
+fig.savefig(f"../results_{file_name}/{folder}/{roi}_nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.pdf")
+fig.savefig(f"../results_{file_name}/{folder}/{roi}_nogse_vs_x_tnogse={tnogse}_N={int(n)}_exp={exp}.png", dpi=600)
 plt.close(fig)

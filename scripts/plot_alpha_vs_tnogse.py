@@ -7,8 +7,8 @@ import seaborn as sns
 sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
-file_name = "levaduras_20240613"
-folder = "fit_contrast_vs_g_mixto_rest"
+file_name = "levaduras_20240622"
+folder = "Globalfit1_M0_tc_alpha_nogse_vs_x_free_rest_G=G1"
 A0 = "con_A0"
 slic = 0 # slice que quiero ver
 D0_ext = 2.3e-12 # m2/ms extra
@@ -17,7 +17,7 @@ zone = "ext"
 n = 2
 
 # Create directory if it doesn't exist
-directory = f"../results_{file_name}/{folder}/{A0}"
+directory = f"../results_{file_name}/{folder}"#/{A0}"
 os.makedirs(directory, exist_ok=True)
 
 #palette = sns.color_palette("tab20", 4) # Generar una paleta de colores única (ej: husl, Set3, tab10, tab20)
@@ -43,8 +43,8 @@ for roi, color in zip(rois, palette):
     data = np.loadtxt(f"{directory}/{roi}_parameters_vs_tnogse.txt")
 
     tnogse = data[:, 0]
-    alpha = data[:, 3]
-    alpha_error = data[:, 4]
+    alpha = data[:, 1]
+    alpha_error = data[:, 2]
 
     sorted_indices = np.argsort(tnogse)
     tnogse = tnogse[sorted_indices]

@@ -8,7 +8,7 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240622"
-folder = "globalfit_M01y2_tc1y2_alpha1y2_tc_alpha_nogse_vs_x_mixto_rest"
+folder = "Globalfit1_M0_tc_alpha_nogse_vs_x_free_rest_G=G1"
 A0 = "con_A0"
 slic = 0 # slice que quiero ver
 D0_ext = 2.3e-12 # m2/ms extra
@@ -43,8 +43,8 @@ for roi, color in zip(rois, palette):
     zone = "int"
 
     tnogse = data[:, 0]
-    M0 = data[:,11]
-    error_M0 = data[:,12]
+    M0 = data[:,9]
+    error_M0 = data[:,10]
 
     #Obtener los índices que ordenarían grad
     sorted_indices = np.argsort(tnogse)
@@ -78,7 +78,7 @@ for roi, color in zip(rois, palette):
     # fig1.savefig(f"{directory}/{roi}_M0_vs_tnogse_g={g}.png", dpi=600)
     # fig1.savefig(f"{directory}/{roi}_M0_vs_tnogse_g={g}.pdf")
 
-    ax2.errorbar(tnogse, M0, yerr=error_M0,  fmt='o-', markersize=3, linewidth=2, capsize=5)
+    ax2.errorbar(tnogse, M0, yerr=0,  fmt='o-', markersize=3, linewidth=2, capsize=5)
     #ax2.plot(tnogse, M0, 'o-', markersize=7, linewidth=2, color = color)
     #ax2.axhline(y=M0_promedio, color='r', linestyle='--', label=f"Promedio = ({M0_promedio:.2f} $\pm$ {M0_promedio_error:.2f})") 
     ax2.set_xlabel("Tiempo de difusión $\mathrm{NOGSE}$ [ms]", fontsize=27)

@@ -10,7 +10,7 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 file_name = "levaduras_20240622"
-folder = "nogse_vs_x_mixto_globalfit"
+folder = "globalfit_nogse_vs_x_mixto"
 A0 = "sin_A0"
 D0_folder = "D0_ext"
 D0_ext = 2.3e-12 # extra

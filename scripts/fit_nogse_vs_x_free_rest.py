@@ -10,24 +10,30 @@ sns.set_theme(context='paper')
 sns.set_style("whitegrid")
 
 tnogses = [15.0, 17.5, 21.5, 25.0, 27.5, 30.0, 32.5, 35.0, 37.5, 40.0]
-# G1 = [100.0, 105.0, 75.0, 60.0, 55.0, 50.0, 45.0, 40.0, 35.0, 30.0]
-G2 = [275.0, 210.0, 160.0, 120.0, 110.0, 100.0, 90.0, 80.0, 75.0, 70.0]
-# G3 = [600.0, 405.0, 300.0, 210.0, 190.0, 170.0, 150.0, 130.0, 120.0, 110.0]
-# G4 = [1000, 800, 700, 600, 550, 500, 450, 400, 375, 350]
+# gs = [100.0, 105.0, 75.0, 60.0, 55.0, 50.0, 45.0, 40.0, 35.0, 30.0]
+# gs = [275.0, 210.0, 160.0, 120.0, 110.0, 100.0, 90.0, 80.0, 75.0, 70.0]
+gs = [600.0, 405.0, 300.0, 210.0, 190.0, 170.0, 150.0, 130.0, 120.0, 110.0]
+# gs = [1000.0, 800.0, 700.0, 600.0, 550.0, 500.0, 450.0, 400.0, 375.0, 350.0]
+
+tc_ints = [1.995, 1.999, 2.102, 2.134, 2.030, 2.193, 2.089, 2.279, 2.167, 2.241]
+M0_ints = [1573.33, 1416.96, 1109.74, 714.98, 407.07, 398.53, 198.05, 225.09, 123.76, 135.28]
 
 file_name = "levaduras_20240622"
-folder = "fit_nogse_vs_x_free_rest"
+folder = "fit_nogse_vs_x_free_rest_G3"
+A0 = "sin_A0"
+D0_ext = 2.3e-12 # extra
+D0_int = 0.65e-12 # 0.7e-12 # intra
 exp = 1 #int(input('exp: '))
+slic = 0 # slice que quiero ver
+modelo = "Free+Rest"
+
 num_grad = input('Gradiente: ')
 #tnogse = float(input('Tnogse [ms]: ')) #ms
 #g = float(input('g [mT/m]: ')) #mT/m
 n = 2
-slic = 0 # slice que quiero ver
-modelo = "Free+Rest"  # nombre carpeta modelo libre/rest/tort
-D0_ext = 2.3e-12 # extra
-D0_int = 1.0e-12 # intra
+rois = ["ROI1"]
 
-for tnogse, g in zip(tnogses, G2):
+for tnogse, g, tc_int, M0_int in zip(tnogses, gs, tc_ints, M0_ints):
 
     fig, ax = plt.subplots(figsize=(8,6)) 
     rois = ["ROI1"]
@@ -53,15 +59,18 @@ for tnogse, g in zip(tnogses, G2):
 
         #modelo M_nogse_rest_dist
         model = lmfit.Model(nogse.fit_nogse_vs_x_free_rest, independent_vars=["TE", "G", "N", "x", "D0_1"], param_names=["alpha_1", "M0_1", "tc_2", "M0_2", "D0_2"])
-        model.set_param_hint("M0_1", value=1000.0, min = 0.0, max = 10000.0, vary = 1)
-        model.set_param_hint("M0_2", value=1000.0, min = 0.0, max = 10000.0, vary = 1)
-        model.set_param_hint("alpha_1", value=0.57, min = 0.0, max = 1.0, vary = 1)
-        model.set_param_hint("tc_2", value=2.21, min = 0.1, max = 1000.0, vary = 0)
-        model.set_param_hint("D0_2", value=D0_int, min = 0.0, max = D0_ext, vary = 0)
+        model.set_param_hint("M0_1", value=2000, min=0, max = 5000, vary = 1)
+        model.set_param_hint("M0_2", value=M0_int, min=0, max = 5000, vary = 1)
+        #model.set_param_hint("M0_2", expr="0.42857*M0_1") 
+        #model.set_param_hint("M0_2", expr="(9/11)*M0_1")
+        model.set_param_hint("tc_2", value=tc_int, min = 0.1, max = 10.0, vary = 0)
+        model.set_param_hint("alpha_1", value=0.5, min = 0, max = 1, vary = 1)
+        model.set_param_hint("D0_2", value=D0_int, min=0, max = 1e-11, vary = 0)
         params = model.make_params()
 
         result = model.fit(f, params, TE=float(tnogse), G=float(g), N=n, x=x, D0_1 = D0_ext)
 
+        print("Tnogse =", tnogse)
         print(result.params.pretty_print())
         print(f"Chi cuadrado = {result.chisqr}")
         print(f"Reduced chi cuadrado = {result.redchi}")
